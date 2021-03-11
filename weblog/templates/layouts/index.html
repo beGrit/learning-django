@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Layout</title>
+</head>
+<body>
+<div id="container">
+    <div id="wrap">
+        {% include 'components/header.html' %}
+        <div class="outer">
+            {% include 'components/outer-main.html' with entries=entries %}
+            <section id="main">
+
+            </section>
+            {% include 'components/sidebar.html' %}
+        </div>
+        {% include 'components/footer.html' %}
+    </div>
+</div>
+</body>
+</html>

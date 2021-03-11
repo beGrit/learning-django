@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ blog.title }}</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static "css/home2.css" %}">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+<div id="container">
+    <div id="wrap">
+        {% include 'components/header.html' %}
+        <div class="outer">
+            <section id="main">
+                {% include 'components/blogpost.html' %}
+            </section>
+            {% include 'components/sidebar.html' %}
+        </div>
+        {% include 'components/footer.html' %}
+    </div>
+</div>
+</body>
+</html>

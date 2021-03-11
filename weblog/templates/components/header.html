@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Header</title>
+</head>
+<body>
+<div id="header">
+    <div id="banner"></div>
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <nav id="main-nav">
+                <a class="main-nav-link" href="{% url 'weblog:home-index' %}">
+                    <i class="fa fa-home"></i> Home
+                </a>
+                <a class="main-nav-link" href="/archives">
+                    <i class="fa fa-folder-o"></i> Archives
+                </a>
+                <a class="main-nav-link" href="#">
+                    <i class="fa fa-bars"></i> Categories
+                </a>
+                <a class="main-nav-link" href="https://github.com/smallnest">
+                    <i class="fa fa-github"></i> Github
+                </a>
+                <a class="main-nav-link" href="/ScalaCollectionsCookbook">
+                    <i class="fa fa-book"></i>
+                </a>
+                <a class="main-nav-link" href="/about">
+                    <i class="fa fa-lemon-o"></i> About me
+                </a>
+            </nav>
+        </div>
+        <div id="header-title">
+            <h1 id="logo-wrap" class="animated bounceInLeft">
+                <a href="{% url 'weblog:home-index' %}" id="logo">锋窝</a>
+            </h1>
+            <h2 id="subtitle-wrap" class="animated bounceInLeft">
+                <a href="/" id="subtitle">Weblog - designed by LinShengfeng</a>
+            </h2>
+        </div>
+    </div>
+</div>
+</body>
+</html>

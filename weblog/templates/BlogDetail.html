@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog detail</title>
+</head>
+<body>
+<div>
+    {{ blog_detail }}
+    <div>
+        <form action="{% url 'weblog:id-blog' blog_detail.id %}" method="post">
+            {% csrf_token %}
+            <input type="submit" value="修改">
+        </form>
+    </div>
+</div>
+</body>
+</html>
