@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gitalk Comments</title>
+</head>
+<body>
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script>
+    const gitalk = new Gitalk({
+        clientID: '80801552ff7ffe5a4c2e',
+        clientSecret: 'b7a65f46aee6b11f1b4a725932e3e5e205ad025c',
+        repo: 'git@github.com:beGrit/gitalk.git',      // The repository of store comments,
+        owner: 'beGrit',
+        admin: ['beGrit'],
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    })
+    gitalk.render('gitalk-container')
+</script>
+</body>
+</html>

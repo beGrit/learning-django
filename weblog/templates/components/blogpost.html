@@ -31,20 +31,12 @@
                 {{ blog.content }}
             {% endautoescape %}
         </div>
+        <footer class="article-footer">
+            {% include 'components/gitalkComments.html' %}
+        </footer>
     </div>
 </article>
 </body>
 <style>
-    .markdown-body {
-        box-sizing: border-box;
-        min-width: 200px;
-        max-width: 980px;
-        margin: 0 auto;
-        padding: 45px;
-    }
-
-    .code {
-
-    }
 </style>
 </html>

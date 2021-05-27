@@ -18,8 +18,10 @@ from django.urls import path, include
 
 import weblog.urls
 import weblog.views
+import job.urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('weblog/', include(weblog.urls)),
+    path('job/', include(job.urls)),
 ]

@@ -47,7 +47,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -82,7 +82,7 @@ DATABASES = {
         'NAME': 'learning',
         'USER': 'lsf',
         'PASSWORD': 'LSFlsf123',
-        'HOST': '118.31.15.23',
+        'HOST': '1.116.186.22',
         'PORT': '3306'
     },
 }
@@ -122,3 +122,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+MEDIA_ROOT = '/home/lsf/PycharmProjects/learning/media/'

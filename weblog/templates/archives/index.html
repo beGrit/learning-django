@@ -1,0 +1,14 @@
+{% extends 'layouts/index.html' %}
+{% block title %}Archives{% endblock title %}
+{% block main_content %}
+    {% for year, items in years.items %}
+        <section class="archives-wrap">
+            <div class="archive-year-wrap">
+                <a href="{% url 'weblog:year-archive' year %}" class="archive-year">{{ year }}</a>
+            </div>
+            {% for item in items %}
+                {% include 'components/archivePost.html' with blog=item %}
+            {% endfor %}
+        </section>
+    {% endfor %}
+{% endblock main_content %}

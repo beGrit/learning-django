@@ -13,20 +13,23 @@
                 <a class="main-nav-link" href="{% url 'weblog:home-index' %}">
                     <i class="fa fa-home"></i> Home
                 </a>
-                <a class="main-nav-link" href="/archives">
+                <a class="main-nav-link" href="{% url 'weblog:archives' %}">
                     <i class="fa fa-folder-o"></i> Archives
                 </a>
                 <a class="main-nav-link" href="#">
                     <i class="fa fa-bars"></i> Categories
                 </a>
-                <a class="main-nav-link" href="https://github.com/smallnest">
+                <a class="main-nav-link" href="https://github.com/beGrit">
                     <i class="fa fa-github"></i> Github
-                </a>
-                <a class="main-nav-link" href="/ScalaCollectionsCookbook">
-                    <i class="fa fa-book"></i>
                 </a>
                 <a class="main-nav-link" href="/about">
                     <i class="fa fa-lemon-o"></i> About me
+                </a>
+            </nav>
+            <nav id="sub-nav">
+                <a class="nav-icon">
+                    {% load static %}
+                    <img class="circular" src="{% static 'images/avatars/头像-01.png' %}" height="40" width="40">
                 </a>
             </nav>
         </div>
@@ -40,5 +43,15 @@
         </div>
     </div>
 </div>
+<style>
+
+</style>
+<script>
+    'strict'
+    let list = document.querySelectorAll('a')
+    for (let node in list.values()) {
+        console.log(node.nodeType)
+    }
+</script>
 </body>
 </html>

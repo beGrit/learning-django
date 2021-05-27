@@ -10,10 +10,36 @@
 </head>
 <body>
 <aside id="sidebar">
-    <div class="widget-wrap">
-        <h3 class="widget-title">bb</h3>
-        <div class="widget"></div>
-    </div>
+    {% for widget in widgets %}
+        <div class="widget-wrap">
+            <h3 class="widget-title">
+                {{ widget.name }}
+            </h3>
+            <div class="widget">
+                {% if widget.name == '原创图书' %}
+                {% elif widget.name == '分类' %}
+                    <ul class="category-list">
+                        {% for item in widget.content %}
+                            <li class="category-list-item">
+                                <a class="category-list-link" href="{{ item.get_absolute_url }}">{{ item.name }}</a>
+                                <span class="category-list-count">
+                                    {{ item.blog.count }}
+                                </span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% elif widget.name == '最近的文章' %}
+                    <ul>
+                        {% for item in widget.content %}
+                            <li>
+                                <a>{{ item.title }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
 </aside>
 </body>
 </html>

@@ -1,42 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>锋窝</title>
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static "css/home2.css" %}">
-    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head>
-<body>
-<div id="container">
-    <div id="wrap">
-        {% include 'components/header.html' %}
-        <div class="outer">
-            <section id="main">
-                {% for entry in entries %}
-                    {% include 'components/entry.html' with entry=entry %}
-                {% endfor %}
-            </section>
-            {% include 'components/sidebar.html' %}
-        </div>
-        {% include 'components/footer.html' %}
-    </div>
-</div>
-</body>
-<script type="application/javascript">
-    // ready event
-    $(document).ready(function () {
-        // Your code here
-        function init() {
-
-        }
-
-    })
-</script>
-<style>
-    a.text {
-        font-weight: bold;
-    }
-</style>
-</html>
+{% extends 'layouts/index.html' %}
+{% block title %}首页{% endblock title %}
+{% block main_content %}
+    {% for entry in entries %}
+        {% include 'components/entry.html' with entry=entry %}
+    {% endfor %}
+{% endblock main_content %}
