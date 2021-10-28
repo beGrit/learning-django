@@ -24,7 +24,7 @@ SECRET_KEY = '@&w-y-(kn)e)a0bnwnxa2l^g%a0wfw*#(rtfcv76y9fj_uza83'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -36,10 +36,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'blog.apps.BlogConfig',
+
+    # 开发者自定义应用 (Develop's application)
     'snippets.apps.SnippetsConfig',
-    'aggregation.apps.AggregationConfig',
-    'testing.apps.TestingConfig',
     'weblog.apps.WeblogConfig',
 ]
 
@@ -53,6 +52,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# URL映射入口
 ROOT_URLCONF = 'learning.urls'
 
 TEMPLATES = [
@@ -80,10 +80,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'learning',
-        'USER': 'lsf',
+        'USER': 'root',
         'PASSWORD': 'LSFlsf123',
-        'HOST': '1.116.186.22',
-        'PORT': '3306'
+        'HOST': '127.0.0.1',
+        'PORT': '3310'
     },
 }
 

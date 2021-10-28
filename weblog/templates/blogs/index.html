@@ -1,0 +1,5 @@
+{% extends 'layouts/index.html' %}
+{% block title %}{{ blog.title }}{% endblock title %}
+{% block main_content %}
+    {% include 'blogs/component/BlogPost.html' with blog=blog %}
+{% endblock main_content %}

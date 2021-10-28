@@ -186,7 +186,7 @@ body {
 }
 
 #container {
-    position: relative;
+    /*position: relative;*/
 }
 
 .mobile-nav-on {
@@ -196,7 +196,7 @@ body {
 #wrap {
     height: 100%;
     width: 100%;
-    position: absolute;
+    position: relative;
     top: 0;
     left: 0;
     -webkit-transition: 0.2s ease-out;
@@ -206,6 +206,7 @@ body {
     transition: 0.2s ease-out;
     z-index: 1;
     background: #eee;
+    overflow: scroll;
 }
 
 .mobile-nav-on #wrap {
@@ -229,13 +230,12 @@ body {
     text-transform: uppercase;
     letter-spacing: 2px;
     color: #999;
-    margin-bottom: 1em;
-    margin-left: 5px;
     line-height: 1em;
     text-shadow: 0 1px #fff;
     font-weight: bold;
 }
 
+.article-post-inner,
 .article-inner,
 .archive-article-inner {
     background: #fff;
@@ -780,6 +780,12 @@ body {
 
 .article-inner {
     overflow: hidden;
+    position: relative;
+}
+
+.article-post-inner {
+    min-height: 500px;
+    position: relative;
 }
 
 .article-meta {
@@ -1248,12 +1254,15 @@ a.article-title:hover {
 }
 
 .article-footer {
+    position: absolute;
+    bottom: 0;
+    width: 90%;
     zoom: 1;
     font-size: 0.85em;
     line-height: 1.6em;
     border-top: 2px solid #ddd;
     padding-top: 1.6em;
-    margin: 0 20px 20px;
+    margin: 0 40px 20px;
 }
 
 .article-footer:before,
@@ -1788,6 +1797,8 @@ table tr:last-child td {
     padding: 50px 0;
     border-top: 1px solid #ddd;
     color: #999;
+    width: 100%;
+    margin: 500px 0 0 0;
 }
 
 #footer a {

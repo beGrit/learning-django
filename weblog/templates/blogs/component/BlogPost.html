@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog post</title>
+</head>
+<body>
+<article class="article article-type-post">
+    <div class="article-meta">
+        <a href="" class="article-date">
+            <time datetime="{{ blog.publish_time }}" itemprop="datePublished">
+                {{ blog.get_publish_date }}
+            </time>
+        </a>
+        <div class="article-category">
+            <a class="article-category-link"
+               href="{% url 'weblog:id-category' blog.category_set.get.id|default:1 %}">
+                {{ blog.category_set.get }}
+            </a>
+        </div>
+        <div class="article-author"> by {{ blog.author }}</div>
+    </div>
+    <div class="article-post-inner">
+        <header class="article-header">
+            <h1 itemprop="name">
+                <a class="article-title" href="#">{{ blog.title }}</a>
+            </h1>
+        </header>
+        <div class="article-entry" itemprop="articleBody">
+            {% autoescape off %}
+                {{ blog.content }}
+            {% endautoescape %}
+        </div>
+        <footer class="article-footer">
+            {% include 'comment/gitalkComments.html' %}
+        </footer>
+    </div>
+</article>
+</body>
+<style>
+</style>
+</html>

@@ -3,25 +3,17 @@ import datetime
 from django.contrib import auth
 from django.contrib.auth import authenticate
 from django.core.mail import send_mail
-from django.http import HttpResponse, HttpResponseRedirect
+from django.db.models import Q
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404, redirect, get_list_or_404
-from django.template import Context
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.views import View
-from django.views.generic import TemplateView, ListView
+from django.views.generic import ListView
 
 from weblog.forms import UploadFileForm, ContactForm, UploadMultipleFilesForm, BlogForm, EntryForm
-from weblog.models import Blog, Entry, Category, CategoryWidget, RecentArticleWidget
+from weblog.models import Blog, Entry, Category, CategoryWidgetPage, RecentArticleWidgetPage
 from weblog.utils import handle_uploaded_file
-
-
-def get_one_blog(request, id):
-    pass
-
-
-def year_blog(request, year):
-    pass
 
 
 def current_time(request):
@@ -29,21 +21,7 @@ def current_time(request):
     html = '<html><body>It is now %s</body></html>' % now
     resp = HttpResponse()
     resp.write(html)
-    print(resp.content)
-    print(resp.getvalue())
     return resp
-
-
-def my_custom_page_not_found_view(request):
-    return HttpResponse('404 not found')
-
-
-def page_not_found_view(request):
-    return render(request, '404.html')
-
-
-def operate_success(request):
-    return render(request, '200.html')
 
 
 def upload_file(request):
@@ -55,9 +33,11 @@ def upload_file(request):
             handle_uploaded_file(logo)
             url = reverse('weblog:200-success')
             return HttpResponseRedirect(url)
+        else:
+            return render(request, 'upload.html', {'form': form})
     else:
-        form = UploadFileForm()
-    return render(request, 'upload.html', {'form': form})
+        # 请求方式有问题,重新刷新页面给用户
+        return render(request, 'upload.html', {'form': UploadFileForm()})
 
 
 def upload_multiple_files(request):
@@ -95,15 +75,6 @@ def handler_your_name(request):
     return render(request, 'test_form.html', {'form': form})
 
 
-class HomePageView(TemplateView):
-    template_name = 'home.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['latest_blogs'] = Blog.objects.all()[:5]
-        return context
-
-
 class BlogListView(ListView):
     model = Blog
 
@@ -119,7 +90,7 @@ class BlogDetailView(View):
 
     def get(self, request, id):
         blog = get_object_or_404(Blog, pk=id)
-        resp = TemplateResponse(request, 'blog_detail/index.html', context={'blog': blog})
+        resp = TemplateResponse(request, 'blogs/index.html', context={'blog': blog})
         return resp
 
     def post(self, request):
@@ -147,8 +118,8 @@ class HomeIndexView(View):
     def get(self, request):
         entries = get_list_or_404(Entry)[:5]
         widgets = []
-        cw = CategoryWidget()
-        raw = RecentArticleWidget()
+        cw = CategoryWidgetPage()
+        raw = RecentArticleWidgetPage()
         widgets.append(cw)
         widgets.append(raw)
         return render(request, 'home/index.html',
@@ -186,8 +157,7 @@ class IdBlogDetailView(View):
 
     def get(self, request, id):
         blog = get_object_or_404(Blog, pk=id)
-        context = Context()
-        return render(request, 'blog_detail/index.html', context={'blog': blog})
+        return render(request, 'blogs/index.html', context={'blog': blog})
 
     def post(self, request, id):
         return render(request, 'success_upload.html')
@@ -198,47 +168,8 @@ class CategoriesView(View):
 
     def get(self, request):
         categories = Category.objects.all()
-        return render(request, '', context={
+        return render(request, 'categories/index.html', context={
             'categories': categories,
-        })
-
-
-class ArchivesView(View):
-    http_method_names = ['get']
-
-    def get(self, request):
-        context = Context()
-        keys = [2019, 2020, 2021]
-        context['years'] = []
-        '''
-            'years':{
-                '2019':[
-                    {},
-                    {},
-                    {},
-                ],
-                '2020':[
-                ],
-                '2021':[
-                ]
-            }
-        '''
-        data = {}
-        for key in keys:
-            qs = Blog.objects.filter(publish_time__year=key).order_by('publish_time__day')
-            data[str(key)] = qs.values('id', 'title', 'publish_time')
-        context['years'] = data
-        return render(request, 'archives/index.html', context=context.dicts[0])
-
-
-class YearArchivesView(View):
-    http_method_names = ['get']
-
-    def get(self, request, year):
-        blogs = Blog.objects.filter(publish_time__year=year)
-        return render(request, '', context={
-            'year': year,
-            'blogs': blogs,
         })
 
 
@@ -255,14 +186,14 @@ def login(request):
         login(request, user)
         render(request, 'home/index.html')
     else:
-        render(request, 'login.html')
+        render(request, 'user/auth/login.html')
 
 
 class LoginView(View):
     http_method_names = ['get', 'post']
 
     def get(self, request):
-        return render(request, 'login.html', )
+        return render(request, 'user/auth/login.html', )
 
     def post(self, request):
         username = request.POST.get('username', '')
@@ -273,4 +204,102 @@ class LoginView(View):
             return redirect('weblog:home-index')
         else:
             # show the valid
-            return render(request, 'login.html')
+            return render(request, 'user/auth/login.html')
+
+
+class AboutMeView(View):
+    http_method_names = ['get']
+
+    def get(self, request):
+        return render(request, 'common/about-me.html', )
+
+
+'''
+ Archive 归档区
+'''
+
+
+class YearsArchiveView(View):
+    http_method_names = ['get']
+
+    def get(self, request):
+        context = {}
+        keys = [2019, 2020, 2021]
+        data = {}
+        for key in keys:
+            # 查询出来的数据按照发布时间排序,且限制最多10条
+            qs = Blog.objects.filter(publish_time__year=key).order_by('publish_time__day')[0:3]
+            count = Blog.objects.filter(publish_time__year=key).count()
+            data[str(key)] = {}
+            data[str(key)]['data'] = list(qs.values('id', 'title', 'publish_time'))
+            data[str(key)]['totalCount'] = count
+        context['code'] = 200
+        context['data'] = data
+        context['one'] = False
+        return render(request, 'archives/YearArchives.html', context=context)
+
+
+class YearArchiveView(View):
+    http_method_names = ['get']
+
+    def get(self, request, year):
+        context = {}
+        keys = [year]
+        data = {}
+        for key in keys:
+            # 查询出来的数据按照发布时间排序,且限制最多10条
+            qs = Blog.objects.filter(publish_time__year=key).order_by('publish_time__day')
+            count = Blog.objects.filter(publish_time__year=key).count()
+            data[str(key)] = {}
+            data[str(key)]['data'] = list(qs.values('id', 'title', 'publish_time'))
+            data[str(key)]['totalCount'] = count
+        context['code'] = 200
+        context['data'] = data
+        context['one'] = True
+        return render(request, 'archives/YearArchives.html', context=context)
+
+
+class MonthArchiveView(View):
+    pass
+
+
+class MonthsArchiveView(View):
+    pass
+
+
+class DayArchiveView(View):
+    def get(self, request, year, month, day):
+        # 查询出来的数据按照发布时间排序,且限制最多10条
+        query = Q(publish_time__year=year) & Q(publish_time__month=month) & Q(publish_time__day=day)
+        qs = Blog.objects.filter(query).order_by('publish_time')
+        count = Blog.objects.filter(query).count()
+
+        if qs.count() == 0:
+            raise Http404()
+
+        # 构造data域
+        data = {}
+        key = str(year) + '/' + str(month) + '/' + str(day)
+        data[key] = {}
+        data[key]['data'] = list(qs.values('id', 'title', 'publish_time'))
+        data[key]['totalCount'] = count
+        data[key]['meta'] = {}
+        data[key]['meta']['year'] = year
+        data[key]['meta']['month'] = month
+        data[key]['meta']['day'] = day
+
+        context = {}
+        context['code'] = 200
+        context['data'] = data
+        context['one'] = True
+        return render(request, 'archives/DayArchives.html', context=context)
+
+    def buildContext(self, key, data):
+        pass
+
+    def buildData(self, data, total_count):
+        pass
+
+
+class DaysArchiveView(View):
+    pass

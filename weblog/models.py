@@ -1,5 +1,4 @@
 from django.db import models
-from django.conf import settings
 
 
 class User(models.Model):
@@ -13,6 +12,7 @@ class User(models.Model):
 
 
 class Author(User):
+    # 博客发布数量
     publish_blog_count = models.IntegerField(default=0)
 
 
@@ -59,7 +59,9 @@ class Category(models.Model):
         return self.name
 
 
-class AbstractWidget(object):
+class PageAbstractWidget(object):
+    # 可注册的插件类型
+    admit_name_space = ['分类', '原创图书', '最近的文章']
 
     def __init__(self, name):
         self._name = name
@@ -70,12 +72,15 @@ class AbstractWidget(object):
 
     @name.setter
     def name(self, value):
+        # 创建的插件有误
+        if value not in self.admit_name_space:
+            raise Exception()
         self._name = value
 
 
-class CategoryWidget(AbstractWidget):
+class CategoryWidgetPage(PageAbstractWidget):
     def __init__(self):
-        super(CategoryWidget, self).__init__('分类')
+        super(CategoryWidgetPage, self).__init__('分类')
         self._content = Category.objects.all()
 
     @property
@@ -83,9 +88,9 @@ class CategoryWidget(AbstractWidget):
         return self._content
 
 
-class RecentArticleWidget(AbstractWidget):
+class RecentArticleWidgetPage(PageAbstractWidget):
     def __init__(self):
-        super(RecentArticleWidget, self).__init__('最近的文章')
+        super(RecentArticleWidgetPage, self).__init__('最近的文章')
         self._content = Blog.objects.order_by('publish_time')[:5]
 
     @property

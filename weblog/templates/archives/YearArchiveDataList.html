@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Archive List</title>
+</head>
+<body>
+{% for key, dataitem in data.items %}
+    <section class="archives-wrap">
+        <div class="archive-year-wrap">
+            <a href="{% url 'weblog:year-archive' key %}" class="archive-year">{{ key }}</a>
+        </div>
+        {% for item in dataitem.data %}
+            {% include 'archives/component/ArchivePost.html' with blog=item %}
+        {% endfor %}
+        {% if dataitem.totalCount > 3 and not one %}
+            <div class="more-btn-outer">
+                <a href="{% url 'weblog:year-archive' key %}" class="archive-year">
+                    <span>点击查看更多...</span>
+                </a>
+            </div>
+        {% endif %}
+    </section>
+{% endfor %}
+</body>
+<style>
+    .more-btn-outer {
+        width: 100%;
+        text-align: center;
+    }
+</style>
+</html>

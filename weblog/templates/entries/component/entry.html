@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Entry</title>
+</head>
+<body>
+<article class="article article-type-post">
+    <div class="article-meta">
+        <a href="" class="article-date">
+            <time datetime="{{ entry.blog.publish_time }}" itemprop="datePublished">
+                {{ entry.blog.get_publish_date }}
+            </time>
+        </a>
+        <div class="article-category">
+            <a class="article-category-link"
+               href="{% url 'weblog:id-category' entry.blog.category_set.get.id|default:1 %}">
+                {{ entry.blog.category_set.get }}
+            </a>
+        </div>
+        <div class="article-author"> by {{ entry.blog.author }}</div>
+    </div>
+    <div class="article-inner">
+        <header class="article-header">
+            <h1 itemprop="name">
+                <a class="article-title" href="{{ entry.blog.get_absolute_url }}">
+                    {{ entry.headline }}
+                </a>
+            </h1>
+        </header>
+        <div class="article-entry" itemprop="articleBody">
+            <p>{{ entry.body_text }}</p>
+            <p class="article-more-link"><a href="{{ entry.blog.get_absolute_url }}">阅读全文</a>
+            </p>
+        </div>
+    </div>
+</article>
+</body>
+</html>

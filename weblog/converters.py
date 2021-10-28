@@ -6,3 +6,13 @@ class FourDigitYearConverter:
 
     def to_url(self, value):
         return '%04d' % value
+
+
+class DayConverter:
+    regex = '^$'
+
+    def to_python(self, ipt):
+        pass
+
+    def to_url(self, ipt):
+        pass
