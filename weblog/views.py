@@ -116,7 +116,7 @@ class HomeIndexView(View):
     http_method_names = ['get']
 
     def get(self, request):
-        entries = get_list_or_404(Entry)[:5]
+        entries = Entry.objects.all()[:5]
         widgets = []
         cw = CategoryWidgetPage()
         raw = RecentArticleWidgetPage()
@@ -303,3 +303,18 @@ class DayArchiveView(View):
 
 class DaysArchiveView(View):
     pass
+
+
+class WidgetView(View):
+
+    def get(self, request):
+        widgets = []
+        cw = CategoryWidgetPage()
+        raw = RecentArticleWidgetPage()
+        widgets.append(cw)
+        widgets.append(raw)
+
+        context = {}
+        context['code'] = 200
+        context['data'] = widgets
+        return HttpResponse()

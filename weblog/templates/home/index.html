@@ -1,7 +1,11 @@
 {% extends 'layouts/index.html' %}
 {% block title %}首页{% endblock title %}
 {% block main_content %}
-    {% for entry in entries %}
-        {% include 'entries/component/entry.html' with entry=entry %}
-    {% endfor %}
+    {% if entries.count == 0 %}
+        ...
+    {% else %}
+        {% for entry in entries %}
+            {% include 'entries/component/entry.html' with entry=entry %}
+        {% endfor %}
+    {% endif %}
 {% endblock main_content %}

@@ -124,3 +124,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 MEDIA_ROOT = '/home/lsf/PycharmProjects/learning/media/'
+
+UPLOADS_ROOT = '/home/lsf/PycharmProjects/learning/media/uploads'
+
+UPLOADS_URL = '/uploads/'
