@@ -1,11 +1,13 @@
+from django.contrib import auth
 from django.db import models
 
 
 class User(models.Model):
     name = models.CharField(max_length=200)
     email = models.EmailField(max_length=30)
-    profile_photo = models.ImageField(upload_to='weblog/static/images/avatars')
+    profile_photo = models.ImageField(upload_to='uploads/%Y/%m/%d/')
     register_time = models.DateField(auto_now_add=True)
+    sys_user = models.OneToOneField(to=auth.models.User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
