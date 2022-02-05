@@ -26,7 +26,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-# Application definition
+# Application definition.
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
 
-    # 开发者自定义应用 (Develop's application)
+    # Custom applications.
     'snippets.apps.SnippetsConfig',
     'weblog.apps.WeblogConfig',
 ]
@@ -46,7 +46,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -79,11 +79,11 @@ WSGI_APPLICATION = 'learning.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'learning',
+        'NAME': 'graduation_project',
         'USER': 'root',
         'PASSWORD': 'LSFlsf123',
         'HOST': '127.0.0.1',
-        'PORT': '3310'
+        'PORT': '3306'
     },
 }
 
@@ -123,8 +123,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = '/home/lsf/PycharmProjects/learning/media/'
+MEDIA_ROOT = BASE_DIR, '/assets/media/'
 
-UPLOADS_ROOT = '/home/lsf/PycharmProjects/learning/media/uploads'
+UPLOADS_ROOT = BASE_DIR, '/assets/media/uploads'
 
 UPLOADS_URL = '/uploads/'
