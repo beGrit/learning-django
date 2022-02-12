@@ -9,7 +9,7 @@
         {% endblock title %}
     </title>
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static "css/home2.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/base.css" %}">
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 <body>
@@ -20,7 +20,7 @@
             <section id="main">
                 {% block main_content %}
                     {# 主内容插槽 #}
-                    默认内容
+                    Default content
                 {% endblock main_content %}
             </section>
             {% include 'layouts/sidebar/sidebar.html' with widgets=widgets %}

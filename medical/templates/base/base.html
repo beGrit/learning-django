@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+    </title>
+    <link rel="stylesheet" type="text/css" href="{% static "admin/css/base.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "admin/css/nav_sidebar.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "admin/css/dashboard.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "admin/css/responsive.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "medical/css/menu.css" %}">
+    <script type="application/javascript" src="{% static "medical/js/base.js" %}"></script>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+<body>
+<div id="container">
+    <div id="header">
+        <div id="branding">
+            <h1 id="site-name"><a href="/medical/">Medical System</a></h1>
+        </div>
+        <div id="user-tools">
+            Welcome,
+            <strong>pocky{{ username }}</strong>.
+            <a href="/medical">View site</a> /
+            <a href="/medical/">Change password</a> /
+            <a href="/medical">Log out</a>
+            <span id="menu-show-button" class="addlink">Tap to show the menu</span>
+        </div>
+    </div>
+    <div id="header-menu" class="header-menu">
+        <div class="menu-item">
+            <a href="/medical">首页</a>
+        </div>
+        <div class="menu-item">
+            <a href="/medical">医疗设备</a>
+        </div>
+        <div class="menu-item">
+            <a href="/medical">疫情专栏</a>
+        </div>
+        <div class="menu-item">
+            <a href="/medical">志愿者申请</a>
+        </div>
+    </div>
+    <div id="wrap">
+        {% block content %}
+            <section id="main">
+                Default content
+            </section>
+        {% endblock content %}
+    </div>
+</div>
+</body>
+</html>

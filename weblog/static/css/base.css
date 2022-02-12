@@ -1794,11 +1794,14 @@ table tr:last-child td {
 
 #footer {
     background: #262a30;
-    padding: 50px 0;
-    border-top: 1px solid #ddd;
     color: #999;
+    padding: 20px 0;
+    border-top: 1px solid #ddd;
+    position: fixed;
+    left: 0;
+    bottom: 0;
     width: 100%;
-    margin: 500px 0 0 0;
+    text-align: center;
 }
 
 #footer a {

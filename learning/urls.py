@@ -21,11 +21,15 @@ from django.urls import path, include
 import weblog.urls
 import weblog.views
 import job.urls
+import medical.urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('weblog/', include(weblog.urls)),
     path('job/', include(job.urls)),
+    path('medical/', include(medical.urls)),
 ]
 
 urlpatterns += static(settings.UPLOADS_URL, document_root=settings.UPLOADS_ROOT)
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

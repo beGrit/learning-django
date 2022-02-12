@@ -4,13 +4,11 @@ from django.urls import path, register_converter, include
 
 from . import views, converters
 
-# type converter
 register_converter(converters.FourDigitYearConverter, 'yyyy')
 register_converter(converters.DayConverter, 'day')
 
 app_name = 'weblog'
 
-# app page
 urlpatterns = [
     # Commons常规资源(错误页面,成功页面,获取当前系统时间)
     path('', views.HomeIndexView.as_view(), name='home-index'),
@@ -61,10 +59,8 @@ urlpatterns = [
     path('about/me/', views.AboutMeView.as_view(), name='about-me'),
 ]
 
-# static page
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
-# custom error page
 handler400 = 'weblog.error_views.http400'
 handler403 = 'weblog.error_views.http403'
 handler404 = 'weblog.error_views.http404'

@@ -1,0 +1,30 @@
+#menu-show-button {
+    cursor: pointer;
+}
+
+.header-menu {
+    width: auto;
+    height: auto;
+    padding-bottom:10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    overflow: hidden;
+    color: var(--header-color);
+    background: var(--header-bg);
+}
+
+.header-menu > .menu-item > a:link,
+.header-menu > .menu-item > a:visited {
+    color: var(--header-link-color);
+}
+
+.header-menu-hidden {
+    display: none;
+}
+
+@media(max-width: 1024px) {
+    #user-tools > #menu-show-button {
+        margin-left: 100px;
+    }
+}
