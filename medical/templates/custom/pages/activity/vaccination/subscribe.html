@@ -1,0 +1,13 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block medical_page_css %}
+{% endblock %}
+{% block content %}
+    <div class="daily-box">
+        <h1 class="main-title">
+            <span>新冠疫苗预约</span>
+        </h1>
+        {% include 'custom/components/week-box.html' %}
+        {% include 'custom/components/daily-subscribe-table.html' %}
+    </div>
+{% endblock %}

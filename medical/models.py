@@ -7,7 +7,7 @@ Property domain.
 '''
 
 
-class DrugInfo(models.Model):
+class Drug(models.Model):
     code = models.CharField(blank=False, help_text='The unique code for drug.', null=True, unique=True, max_length=100)
     name = models.CharField(blank=False, help_text='The drug name.', null=True, max_length=100)
     description = models.TextField(blank=True, help_text='The drug info description.', null=False)

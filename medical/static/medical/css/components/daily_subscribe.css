@@ -1,0 +1,82 @@
+
+.mz_ta > table tr td li {
+    list-style-type: none;
+    width: 100%;
+    float: left;
+    border-bottom: dotted 1px #bdbdbd;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+@media only screen and (max-width: 1200px) {
+    .mz_ta table {
+        width: 100%;
+        float: left;
+    }
+
+    .mz_ta td {
+        border: 1px solid #bdbdbd;
+        padding: 6px 10px;
+        font-size: 12px;
+        line-height: 24px;
+    }
+
+    .mz_ta .tr1 td {
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .mz_lb {
+        width: 100%;
+        float: left;
+    }
+
+    .mz_lb li {
+        width: 100%;
+        float: left;
+        border-bottom: dotted 1px #bdbdbd;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .mz_ta {
+        width: 100%;
+    }
+
+    .mz_ta td {
+        border: 1px solid #bdbdbd;
+        padding: 10px 15px;
+        font-size: 12px;
+        line-height: 24px;
+    }
+
+    .mz_ta .tr1 td {
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .mz_ta td {
+        border: 1px solid #bdbdbd;
+        padding: 10px 15px;
+        font-size: 12px;
+        line-height: 24px;
+    }
+
+    .mz_lb {
+        width: 100%;
+        float: left;
+    }
+
+    .mz_lb li {
+        width: 100%;
+        float: left;
+        border-bottom: dotted 1px #bdbdbd;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+    }
+
+}
+
+

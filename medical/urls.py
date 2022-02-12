@@ -8,6 +8,8 @@ app_name = 'medical'
 
 urlpatterns = [
     path('', medical.views.home_page, name='home-page'),
+    path('custom/activity/vaccination/subscribe', medical.views.activity_vaccination_subscribe,
+         name='activity-vaccination-subscribe')
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
