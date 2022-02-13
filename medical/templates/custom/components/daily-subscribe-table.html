@@ -1,38 +1,47 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static "medical/css/components/daily_subscribe.css" %}">
-<div class="mz_ta">
-    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-        <tbody>
-        <tr class="tr1">
-            <td width="50%">上午</td>
-            <td width="50%">下午</td>
-        </tr>
-        <tr id="list">
-            <td valign="top">
-                <ul class="mz_lb">
-                    <li>
-                        <span>浙大二院-XXX园区-XXX楼</span><span>11/50</span>
-                        <button class="subscribe-btn">预约</button>
-                    </li>
-                    <li>
-                        <span>浙大三院-XXX园区-XXX楼</span><span>11/50</span>
-                        <button class="subscribe-btn">预约</button>
-                    </li>
-                </ul>
-            </td>
-            <td valign="top">
-                <ul class="mz_lb">
-                    <li>
-                        <span>浙大二院-XXX园区-XXX楼</span><span>11/50</span>
-                        <button class="subscribe-btn">预约</button>
-                    </li>
-                    <li>
-                        <span>浙大三院-XXX园区-XXX楼</span><span>11/50</span>
-                        <button class="subscribe-btn">预约</button>
-                    </li>
-                </ul>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</div>
+{% for dict in daily_vaccinations %}
+    <div class="mz_ta mz_ta_{{ forloop.counter0 }}{% if forloop.counter0 != 0 %} none{% else %} table_show{% endif %}">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tbody>
+            <tr class="tr1">
+                <td width="50%">上午</td>
+                <td width="50%">下午</td>
+            </tr>
+            <tr id="list">
+                {% for key, vaccinations_dict in dict.items %}
+                    {% for vaccinations in vaccinations_dict.values %}
+                        {% if vaccinations|length == 0 %}
+                            <td><span>暂无活动!</span></td>
+                        {% else %}
+                            <td valign="top">
+                                <ul class="mz_lb">
+                                    {% for vaccination in vaccinations %}
+                                        <li>
+                                            <p>
+                                            <h5><strong>{{ vaccination.title }}</strong></h5>
+                                            <span>
+                                            {{ vaccination.related_builder_area.related_office_area.related_hospital.name }}
+                                            </span>
+                                            <span>
+                                            -{{ vaccination.related_builder_area.related_office_area.name }}
+                                            </span>
+                                            <span>
+                                                 -{{ vaccination.related_builder_area.name }}
+                                            </span>
+                                            </p>
+                                            <span>{{ vaccination.amount_of_subscribe }}/{{ vaccination.amount_of_vaccine }}</span>
+                                            <button class="subscribe-btn">预约</button>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </td>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </tr>
+            </tbody>
+        </table>
+    </div>
+{% endfor %}
+

@@ -1,6 +1,7 @@
 import datetime
 
 from django.db import models
+from django.utils import timezone
 
 '''
 Property domain.
@@ -91,17 +92,29 @@ class Region(models.Model):
 class Hospital(models.Model):
     code = models.CharField(blank=False, unique=True, help_text='The code for hospital', max_length=200)
     name = models.CharField(blank=False, help_text='The name for hospital.', max_length=200)
-    related_hospital = models.OneToOneField(blank=False, to=Region, on_delete=models.CASCADE)
+    related_region = models.OneToOneField(blank=False, to=Region, on_delete=models.CASCADE)
 
 
 class OfficeArea(models.Model):
     code_number = models.CharField(blank=False, unique=True, help_text='The office builder code number', max_length=200)
+    name = models.CharField(blank=False, max_length=200)
     related_hospital = models.ForeignKey(blank=False, to=Hospital, on_delete=models.CASCADE)
 
 
-class BuildrArea(models.Model):
+class BuildArea(models.Model):
     code_number = models.CharField(blank=False, unique=True, help_text='The office builder code number', max_length=200)
-    related_office_area = models.ForeignKey(blank=False, to=Hospital, on_delete=models.CASCADE)
+    name = models.CharField(blank=False, max_length=200)
+    related_office_area = models.ForeignKey(blank=False, to=OfficeArea, on_delete=models.CASCADE)
+
+
+'''
+Activity resources
+'''
+
+
+class Vaccine(models.Model):
+    name = models.CharField(blank=False, null=True, max_length=200)
+    pass
 
 
 '''
@@ -115,6 +128,9 @@ class OrdinaryActivity(models.Model):
 
 
 class COVIDActivity(models.Model):
+    title = models.CharField(blank=False, null=True, max_length=200)
+    description = models.TextField(blank=True)
+
     class Meta:
         abstract = True
 
@@ -124,4 +140,16 @@ class NucleicAcidTesting(COVIDActivity):
 
 
 class Vaccination(COVIDActivity):
-    pass
+    process_date_time = models.DateTimeField()
+    publish_date_time = models.DateTimeField()
+    related_builder_area = models.ForeignKey(blank=False, to=BuildArea, on_delete=models.CASCADE)
+    related_vaccine = models.ForeignKey(blank=False, to=Vaccine, on_delete=models.CASCADE)
+    amount_of_subscribe = models.IntegerField(blank=False)
+    amount_of_vaccine = models.IntegerField(blank=True)
+
+    @property
+    def is_due(self) -> bool:
+        if timezone.now() > self.process_date_time:
+            return True
+        else:
+            return False

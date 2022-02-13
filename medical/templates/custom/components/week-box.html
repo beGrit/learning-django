@@ -4,27 +4,18 @@
 <div class="week-box">
     <nav class="nav-week">
         <ul id="nav-week-list">
-            <li id="li1" class="crt">
-                <a attrid="1">星期一</a>
-            </li>
-            <li id="li2">
-                <a attrid="2">星期二</a>
-            </li>
-            <li id="li3" class="line">
-                <a attrid="3">星期三</a>
-            </li>
-            <li id="li4">
-                <a attrid="4">星期四</a>
-            </li>
-            <li id="li5">
-                <a attrid="5">星期五</a>
-            </li>
-            <li id="li6" class="line">
-                <a attrid="6">星期六</a>
-            </li>
-            <li id="li7">
-                <a attrid="7">星期日</a>
-            </li>
+            {% for dict in daily_vaccinations %}
+                {% for key0, key1 in dict %}
+                    <li id="li{{ forloop.parentloop.counter0 }}"
+                            {% if forloop.parentloop.counter0 == 2 or forloop.parentloop.counter0 == 5 %}
+                        class="line"
+                            {% elif forloop.parentloop.counter0 == 0 %}
+                        class="crt"
+                            {% endif %}>
+                        <a attrid="{{ forloop.parentloop.counter0 }}">{{ key0 }}</a>
+                    </li>
+                {% endfor %}
+            {% endfor %}
         </ul>
     </nav>
 </div>

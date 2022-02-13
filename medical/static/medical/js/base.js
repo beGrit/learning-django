@@ -1,4 +1,4 @@
-window.onload = function () {
+window.addEventListener('load', function () {
     const menuShowButton = document.querySelector('#menu-show-button')
     const headerMenuElm = document.querySelector('#header-menu')
     menuShowButton.onclick = function (e) {
@@ -8,4 +8,4 @@ window.onload = function () {
             headerMenuElm.classList.remove('header-menu-hidden')
         }
     }
-}
+})

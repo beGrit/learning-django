@@ -1,14 +1,8 @@
+from django.apps import apps
 from django.contrib import admin
 
-from medical.models import Drug, Doctor
+models = apps.get_models('medical')
 
-
-@admin.register(Drug)
-class DrugAdmin(admin.ModelAdmin):
-    list_display = ('code', 'name', 'drug_thumbnail')
-    pass
-
-
-@admin.register(Doctor)
-class DoctorAdmin(admin.ModelAdmin):
-    pass
+for model in models:
+    if not admin.site.is_registered(model):
+        admin.site.register(model)
