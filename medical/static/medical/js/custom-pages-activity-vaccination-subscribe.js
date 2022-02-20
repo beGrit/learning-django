@@ -14,4 +14,10 @@ window.addEventListener('load', function () {
             }
         })
     }
+
+    const subscribe_btn = document.querySelector('.subscribe-btn')
+    subscribe_btn.addEventListener('click', () => {
+        let url = subscribe_btn.getAttribute('value')
+        window.open(url)
+    })
 })

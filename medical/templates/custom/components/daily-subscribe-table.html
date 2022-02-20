@@ -31,7 +31,9 @@
                                             </span>
                                             </p>
                                             <span>{{ vaccination.amount_of_subscribe }}/{{ vaccination.amount_of_vaccine }}</span>
-                                            <button class="subscribe-btn">预约</button>
+                                            <button class="subscribe-btn" value="{% url 'medical:activity-vaccination-subscribe-form' vaccination.id %}"
+                                                    {% if vaccination.is_due %}disabled{% endif %}>{% if vaccination.is_due %}已过期!!!!停止{% endif %}预约
+                                            </button>
                                         </li>
                                     {% endfor %}
                                 </ul>

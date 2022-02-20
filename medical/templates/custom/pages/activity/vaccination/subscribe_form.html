@@ -1,0 +1,37 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block medical_page_css %}
+    <link rel="stylesheet" type="text/css"
+          href="{% static "medical/css/page/custom-pages-activity-vaccination-subscribe_form.css" %}">
+{% endblock %}
+{% block medical_page_js %}
+{% endblock %}
+{% block content %}
+    <form action="{% url 'medical:activity-vaccination-subscribe-form' form.initial.related_vaccination.id %}"
+          method="POST">
+        {% csrf_token %}
+        {{ form }}
+        <div class="related_vaccination">
+            <h1 class="main-title">
+                <span>新冠疫苗信息</span>
+            </h1>
+            <div>
+                <p>
+                <h5><strong>{{ form.initial.related_vaccination.title }}</strong></h5>
+                <span>
+                {{ form.related_vaccination.related_builder_area.related_office_area.related_hospital.name }}
+                </span>
+                <span>
+                -{{ form.related_vaccination.related_builder_area.related_office_area.name }}
+                </span>
+                <span>
+                -{{ form.related_vaccination.related_builder_area.name }}
+                </span>
+                </p>
+            </div>
+        </div>
+        <div class="submit-row">
+            <input type="submit" value="提交">
+        </div>
+    </form>
+{% endblock %}

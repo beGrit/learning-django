@@ -1,5 +1,6 @@
 import datetime
 
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils import timezone
 
@@ -153,3 +154,30 @@ class Vaccination(COVIDActivity):
             return True
         else:
             return False
+
+
+class Subscribe(models.Model):
+    subscribe_date_time = models.DateTimeField(blank=True, auto_now_add=True)
+
+    class Meta:
+        abstract = True
+
+
+class VaccinationSubscribe(Subscribe):
+    name = models.CharField(blank=False, null=True, max_length=200)
+    telephone = models.CharField(blank=False, null=True, max_length=200)
+    email_address = models.EmailField(blank=True)
+    related_vaccination = models.OneToOneField(to=Vaccination, on_delete=models.DO_NOTHING)
+
+    def clean(self):
+        Subscribe.clean(self)
+        if not self.can_subscribe():
+            raise ValidationError('This vaccination can not be subscribe.')
+
+    def can_subscribe(self):
+        flag = True
+        if self.related_vaccination.is_due:
+            flag = False
+        if self.related_vaccination.amount_of_subscribe + 1 > self.related_vaccination.amount_of_vaccine:
+            flag = False
+        return flag

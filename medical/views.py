@@ -1,8 +1,12 @@
 import datetime
 
+from django import urls
+from django.http import HttpResponseRedirect
 from django.template.response import TemplateResponse
+from django.db import transaction
 
-from medical.models import COVIDActivity, Vaccination
+from medical.forms import VaccinationSubscribeForm
+from medical.models import Vaccination
 
 
 def home_page(request):
@@ -12,7 +16,6 @@ def home_page(request):
 def activity_vaccination_subscribe(request):
     today = datetime.datetime.today()
     week_days = [('星期一', 0),
-                 ('星期二', 1),
                  ('星期二', 2),
                  ('星期三', 3),
                  ('星期四', 4),
@@ -40,3 +43,27 @@ def activity_vaccination_subscribe(request):
     return TemplateResponse(request, 'custom/pages/activity/vaccination/subscribe.html', {
         'daily_vaccinations': daily_vaccinations
     })
+
+
+def subscribe_vaccination_form(request, vaccination_id=1):
+    initial = {
+        'related_vaccination': Vaccination.objects.get(id=vaccination_id)
+    }
+    if request.method == 'POST':
+        vaccination_subscribe_form = VaccinationSubscribeForm(request.POST, initial=initial)
+        vaccination_subscribe_form.full_clean()
+        if vaccination_subscribe_form.is_valid():
+            # vaccination_subscribe_form.related_vaccination.amount_of_subscribe += 1
+            with transaction.atomic():
+                vaccination_subscribe_form.save()
+                vaccination_subscribe_form.after_save()
+                return HttpResponseRedirect(urls.reverse('medical:activity-vaccination-subscribe-success'))
+    else:
+        vaccination_subscribe_form = VaccinationSubscribeForm(initial=initial)
+    return TemplateResponse(request, 'custom/pages/activity/vaccination/subscribe_form.html', {
+        'form': vaccination_subscribe_form
+    })
+
+
+def subscribe_vaccination_success(request):
+    return TemplateResponse(request, 'custom/pages/activity/vaccination/subscribe_success.html')

@@ -53,7 +53,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# URL映射入口
+# URL Patterns
 ROOT_URLCONF = 'learning.urls'
 
 TEMPLATES = [
@@ -131,3 +131,11 @@ MEDIA_URL = '/media/'
 UPLOADS_ROOT = os.path.join(BASE_DIR, 'uploaded-files')
 
 UPLOADS_URL = '/uploaded-files/'
+
+# Mail System configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.qq.com'
+EMAIL_PORT = 25
+EMAIL_HOST_USER = '1134187280@qq.com'
+EMAIL_FROM = 'Pocky <1134187280@qq.com>'
+EMAIL_HOST_PASSWORD = 'xvybsihhwufzihbb'
