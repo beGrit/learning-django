@@ -155,6 +155,10 @@ class Vaccination(COVIDActivity):
         else:
             return False
 
+    @property
+    def full_area(self) -> str:
+        return self.related_builder_area.related_office_area.related_hospital.name + self.related_builder_area.name + self.related_builder_area.related_office_area.name
+
 
 class Subscribe(models.Model):
     subscribe_date_time = models.DateTimeField(blank=True, auto_now_add=True)
@@ -167,7 +171,7 @@ class VaccinationSubscribe(Subscribe):
     name = models.CharField(blank=False, null=True, max_length=200)
     telephone = models.CharField(blank=False, null=True, max_length=200)
     email_address = models.EmailField(blank=True)
-    related_vaccination = models.OneToOneField(to=Vaccination, on_delete=models.DO_NOTHING)
+    related_vaccination = models.ForeignKey(to=Vaccination, on_delete=models.DO_NOTHING)
 
     def clean(self):
         Subscribe.clean(self)

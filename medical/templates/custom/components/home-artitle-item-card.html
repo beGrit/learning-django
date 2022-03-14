@@ -1,0 +1,21 @@
+<div class="article-card {{ grater_second_class }}">
+    <div class="article-card-cover">
+        {% if home_article.facade_image_url_path %}
+            <img src="{{ home_article.facade_image_url_path }}"
+                 alt="cover" class="article-card-cover-img">
+        {% else %}
+            <img src="/media/medical/images/home-article/empty.png"
+                 alt="cover" class="article-card-cover-img">
+        {% endif %}
+    </div>
+    <div class="article-card-body">
+        <a href="{{ home_article.detail_url_path }}" target="_blank" class="article-title" rel="">
+            <div class="high-light body-title common-text-link">
+                {{ home_article.title }}
+            </div>
+        </a>
+        <div class="high-light body-content">
+            {{ home_article.content }}
+        </div>
+    </div>
+</div>
