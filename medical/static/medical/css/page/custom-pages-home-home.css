@@ -1,0 +1,141 @@
+@keyframes opacity-change {
+    0% {
+        opacity: 95%;
+    }
+
+    100% {
+        opacity: 100%;
+    }
+}
+
+body {
+    background-color: #f2f3f5;
+}
+
+.home-header {
+    width: 100%;
+    margin-bottom: 28px;
+    height: 558px;
+}
+
+.home-header-container {
+    background: url("../../images/home/banner/img.png") no-repeat 1% 1%;;
+    background-size: cover;
+    height: 500px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-flow: column nowrap;
+    border-radius: 25% 10%;
+}
+
+.home-header .search-input-container {
+    margin-top: 31px;
+}
+
+.search-input-container {
+    box-shadow: 0 2px 1px 0 hsl(215deg 9% 63% / 5%);
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 680px;
+    height: 46px;
+    background-color: #fff;
+}
+
+.search-input-container .search-input {
+    display: inline-block;
+    flex: 1 1;
+    text-indent: 42px;
+    border: 1px solid #e8e9eb;
+    font-size: 1.4rem;
+    height: 44px;
+    line-height: 44px;
+    color: #444c57;
+}
+
+.search-input-container .search-input-button {
+    width: 128px;
+    height: 46px;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #00c792;
+    font-weight: 500;
+    line-height: 16px;
+    color: #fff;
+}
+
+.home-banner {
+    display: flex;
+    max-width: 1140px;
+    width: 100%;
+    margin-top: 80px;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.home-banner .home-banner-item {
+    display: flex;
+    padding: 36px 20px;
+    align-items: center;
+    width: 260px;
+    height: 120px;
+    border-radius: 4px;
+    box-shadow: 0 6px 12px 0 hsl(215deg 9% 63% / 20%);
+    background-color: #fff;
+    box-sizing: border-box;
+    margin-left: 12px;
+    margin-bottom: 12px;
+    justify-content: space-around;
+    text-align: center;
+    opacity: 92%;
+}
+
+.home-banner .home-banner-item:hover {
+    animation: 1s opacity-change forwards;
+}
+
+.home-banner .home-banner-item .item-info-title {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 24px;
+    color: #252a33;
+}
+
+.home-banner .home-banner-item .item-info-sub {
+    color: gray;
+}
+
+
+.home-article {
+    display: flex;
+    flex-flow: column nowrap;
+    max-width: 1180px;
+    width: 100%;
+    border-radius: 4px;
+    background-color: #fff;
+    box-sizing: border-box;
+    margin: 0 auto 20px;
+    padding: 28px 30px;
+}
+
+.home-article .title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+}
+
+.home-article .title .title-text {
+    font-size: 2rem;
+    color: #252a33;
+    font-weight: 500;
+    line-height: 24px;
+}
+
+.home-article .title .title-more {
+    font-size: 1.6rem;
+    color: #00c792;
+}
