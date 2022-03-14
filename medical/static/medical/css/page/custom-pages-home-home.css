@@ -19,14 +19,14 @@ body {
 }
 
 .home-header-container {
-    background: url("../../images/home/banner/img.png") no-repeat 1% 1%;;
+    background: url("../../images/home/banner/img_3.png") no-repeat 1% 1%;;
     background-size: cover;
     height: 500px;
     width: 100%;
     display: flex;
     align-items: center;
     flex-flow: column nowrap;
-    border-radius: 25% 10%;
+    border-radius: 30px;
 }
 
 .home-header .search-input-container {
@@ -138,4 +138,88 @@ body {
 .home-article .title .title-more {
     font-size: 1.6rem;
     color: #00c792;
+}
+
+.article-card {
+    display: flex;
+}
+
+.article-card .article-card-cover {
+    width: 100px;
+    height: 100px;
+    min-width: 100px;
+    border-radius: 4px;
+    border: 1px solid rgba(0,0,0,.05);
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.article-card .article-card-cover-img {
+    height: 100%;
+    width: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+    display: block;
+}
+
+.article-card .article-card-body {
+    margin-left: 12px;
+}
+
+.article-card .article-card-body .article-title {
+    display: block;
+}
+
+.article-card .article-card-body .body-title {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 20px;
+    color: #252a33;
+    margin-bottom: 16px;
+    display: -webkit-box;
+    word-break: break-all;
+    overflow: hidden;
+    -webkit-line-clamp: 1;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    white-space: normal!important;
+}
+
+.article-card .article-card-body .body-content {
+    font-size: 14px;
+    line-height: 20px;
+    color: #828993;
+    display: -webkit-box;
+    word-break: break-all;
+    overflow: hidden;
+    -webkit-line-clamp: 3;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    white-space: normal!important;
+}
+
+.link-line {
+    font-size: 14px;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    display: -webkit-box;
+    word-break: break-all;
+    overflow: hidden;
+    -webkit-line-clamp: 1;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    white-space: normal!important;
+}
+
+.link-line-title {
+    display: block;
+    position: relative;
+    padding-left: 8px;
+    margin-left: 4px;
+    color: #252a33;
+}
+
+.content-list .grater-second-article-card {
+    margin-top: 30px;
 }

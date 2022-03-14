@@ -26,11 +26,11 @@
                    rel="">查看更多</a>
             </div>
             <div class="content-list">
-                {% for artitle in home_article.popularization_articles %}
-                    {% if forloop.counter0 == 0 %}
-                        {% include 'custom/components/home-article-item.html' %}
+                {% for home_article in home_article.popularization_articles %}
+                    {% if forloop.counter0 > 0 %}
+                        {% include 'custom/components/home-artitle-item-card.html' with grater_second_class='grater-second-article-card' %}
                     {% else %}
-                        {% include 'custom/components/home-article-item.html' %}
+                        {% include 'custom/components/home-artitle-item-card.html' %}
                     {% endif %}
                 {% endfor %}
             </div>
