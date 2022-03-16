@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <title>
     </title>
-{#    <link rel="stylesheet" type="text/css" href="{% static "admin/css/base.css" %}">#}
-{#    <link rel="stylesheet" type="text/css" href="{% static "admin/css/nav_sidebar.css" %}">#}
-{#    <link rel="stylesheet" type="text/css" href="{% static "admin/css/dashboard.css" %}">#}
+    {#    <link rel="stylesheet" type="text/css" href="{% static "admin/css/base.css" %}">#}
+    {#    <link rel="stylesheet" type="text/css" href="{% static "admin/css/nav_sidebar.css" %}">#}
+    {#    <link rel="stylesheet" type="text/css" href="{% static "admin/css/dashboard.css" %}">#}
     <link rel="stylesheet" type="text/css" href="{% static "medical/css/base/base.css" %}">
     <link rel="stylesheet" type="text/css" href="{% static "medical/css/base/form.css" %}">
     <link rel="stylesheet" type="text/css" href="{% static "admin/css/responsive.css" %}">
@@ -27,7 +27,7 @@
 <div id="container">
     <div id="header">
         <div id="branding">
-            <h1 id="site-name"><a href="/medical/">Medical System</a></h1>
+            <h1 id="site-name"><a href="/medical/">医疗系统 Medical System</a></h1>
         </div>
         <div id="user-tools">
             Welcome,
@@ -46,7 +46,7 @@
             <a href="/medical">物资专栏</a>
         </div>
         <div class="menu-item">
-            <a href="/medical">疫情专栏</a>
+            <a href="{% url 'medical:epidemic-index' %}">疫情专栏</a>
         </div>
         <div class="menu-item">
             <a href="/medical">志愿者申请</a>
