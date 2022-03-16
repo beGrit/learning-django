@@ -4,7 +4,6 @@
     <link rel="stylesheet" type="text/css" href="{% static "medical/css/page/custom-pages-home-home.css" %}">
 {% endblock %}
 {% block content %}
-    <div class="image-banner"></div>
     <div class="home-header">
         <div class="home-header-container">
             <div class="search-input-container">
@@ -15,6 +14,11 @@
                     {% include 'custom/components/home-banner-item.html' %}
                 {% endfor %}
             </div>
+        </div>
+    </div>
+    <div class="home-slideshow">
+        <div class="home-slideshow-container">
+            Home Slideshow
         </div>
     </div>
     <div class="home-article">
