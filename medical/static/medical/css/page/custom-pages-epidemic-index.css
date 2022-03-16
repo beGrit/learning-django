@@ -1,0 +1,41 @@
+.epidemic-data {
+    max-width: 1180px;
+    width: 100%;
+    border-radius: 12px;
+    border: 1px solid #00c792;
+    margin: 0 -16px;
+    padding: 12px 16px;
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 10%);
+}
+
+.virus-data > .content {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 30px;
+}
+
+.virus-data-item {
+    width: 100px;
+}
+
+.virus-data-item > span {
+    font-size: 14px;
+    line-height: 22px;
+    color: #333;
+    margin-bottom: 2px;
+}
+
+.virus-data-item > p {
+    color: #FF6A57;
+    font-size: 24px;
+    line-height: 28px;
+}
+
+.grow-chart {
+    border-top: 1px solid #f39e0b;
+    margin-top: 25px;
+    padding-top: 25px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}

@@ -8,6 +8,8 @@ from django.db import transaction
 from medical.forms import VaccinationSubscribeForm
 from medical.models import Vaccination
 
+from pyecharts.charts import Bar, Pie
+
 
 def home_page(request):
     home_banner_items = [
@@ -28,11 +30,6 @@ def home_page(request):
         },
         {
             'details_url_path': '',
-            'title': '查检查/手术',
-            'description': '检查与手术专业百科',
-        },
-        {
-            'details_url_path': '',
             'title': '查疫苗',
             'description': '疫苗还有多少？哪些疫苗适合你呢？',
         },
@@ -40,6 +37,11 @@ def home_page(request):
             'details_url_path': '',
             'title': '测一测',
             'description': '你是否困惑自己是不是到底生病了没？这里有专业的试题，评估您的问题',
+        },
+        {
+            'details_url_path': '',
+            'title': '医疗小视频',
+            'description': '快来小视频广场，释放释放你的患病焦虑',
         },
     ]
     popularization_articles = [
@@ -84,6 +86,79 @@ def home_page(request):
                                 'home_article': {
                                     'popularization_articles': popularization_articles
                                 },
+                            })
+
+
+def epidemic(request):
+    virus_data = [
+        {
+            'label': '新增确诊',
+            'data': 4,
+        },
+        {
+            'label': '新增本土',
+            'data': 0,
+        },
+        {
+            'label': '新增境外',
+            'data': 4,
+        },
+        {
+            'label': '新增无症状',
+            'data': 9,
+        },
+        {
+            'label': '现存确诊',
+            'data': 152,
+        },
+        {
+            'label': '累计确诊',
+            'data': 1572,
+        },
+        {
+            'label': '累计治愈',
+            'data': 1417,
+        },
+        {
+            'label': '累计死亡',
+            'data': 3,
+        },
+    ]
+
+    x_axis = []
+    data_axis = []
+    for virus_item in virus_data:
+        x_axis.append(virus_item['label'])
+        data_axis.append(virus_item['data'])
+
+    # Build the bar chart.
+    bar = Bar(init_opts={
+        'width': '500px',
+        'height': '300px',
+    })
+    bar.add_xaxis(x_axis)
+    bar.add_yaxis("今日疫情走势", y_axis=data_axis, color='#FF6A57')
+    bar_data = bar.render_embed()
+
+    # Build the pie chart.
+    pie = Pie(init_opts={
+        'width': '500px',
+        'height': '600px',
+    })
+    pie_data_pair = []
+    for data_item in virus_data:
+        pie_data_pair.append([
+            data_item['label'],
+            data_item['data'],
+        ])
+    pie.add(series_name='', data_pair=pie_data_pair)
+    pie_data = pie.render_embed()
+    return TemplateResponse(request,
+                            'custom/pages/epidemic/index.html',
+                            context={
+                                'virus_data': virus_data,
+                                'bar_data': bar_data,
+                                'pie_data': pie_data,
                             })
 
 
