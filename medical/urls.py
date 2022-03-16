@@ -12,7 +12,9 @@ urlpatterns = [
     path('custom/activity/vaccination/subscribe/form/<int:vaccination_id>', medical.views.subscribe_vaccination_form,
          name='activity-vaccination-subscribe-form'),
     path('custom/activity/vaccination/subscribe/success', medical.views.subscribe_vaccination_success,
-         name='activity-vaccination-subscribe-success')
+         name='activity-vaccination-subscribe-success'),
+    path('custom/epidemic/index', medical.views.epidemic,
+         name='epidemic-index'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
