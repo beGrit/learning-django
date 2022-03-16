@@ -47,3 +47,29 @@
     border: 1px solid var(--hairline-color);
     border-radius: 4px;
 }
+
+body {
+    background-color: #f2f3f5;
+}
+
+.page-title {
+    font-size: 42px;
+    margin-top: 35px;
+}
+
+.left-content-container {
+    width: 65%;
+}
+
+.page-title {
+    margin-bottom: 50px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.form-container {
+    width: 100%;
+    border-radius: 20px;
+    background-color: #fff;
+    box-sizing: border-box;
+    padding: 30px;
+}
