@@ -3,13 +3,16 @@
 {% block medical_page_css %}
 {% endblock %}
 {% block medical_page_js %}
-    <script type="application/javascript" src="{% static 'medical/js/custom-pages-activity-vaccination-subscribe.js' %}"></script>
+    <script type="application/javascript"
+            src="{% static 'medical/js/custom-pages-activity-vaccination-subscribe.js' %}"></script>
 {% endblock %}
 {% block content %}
     <div class="daily-box">
-        <h1 class="main-title">
-            <span>新冠疫苗预约</span>
-        </h1>
+        <div class="breadcrumb">
+            <h1 class="main-title">
+                <span>新冠疫苗预约</span>
+            </h1>
+        </div>
         {% include 'custom/components/week-box.html' %}
         {% include 'custom/components/daily-subscribe-table.html' %}
     </div>

@@ -15,6 +15,10 @@ urlpatterns = [
          name='activity-vaccination-subscribe-success'),
     path('custom/epidemic/index', medical.views.epidemic,
          name='epidemic-index'),
+    path('custom/hospital/index', medical.views.hospital_list,
+         name='hospital-index'),
+    path('custom/hospital/details/<int:hospital_id>', medical.views.hospital_details,
+         name='hospital-details'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

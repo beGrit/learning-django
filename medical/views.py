@@ -1,9 +1,10 @@
 import datetime
 
 from django import urls
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpRequest
 from django.template.response import TemplateResponse
 from django.db import transaction
+from django.urls import reverse
 
 from medical.forms import VaccinationSubscribeForm
 from medical.models import Vaccination
@@ -24,7 +25,7 @@ def home_page(request):
             'description': '不知道吃啥药？快来看看药品信息大全',
         },
         {
-            'details_url_path': '',
+            'details_url_path': reverse('medical:hospital-index'),
             'title': '查医院',
             'description': '看看附近有哪些医院？',
         },
@@ -46,7 +47,7 @@ def home_page(request):
     ]
     popularization_articles = [
         {
-            'facade_image_url_path': '/media/medical/images/home-article/img.png',
+            'facade_image_url_path': '/media/medical/images/home-article/img_01.png',
             'title': '四川省新型冠状病毒肺炎疫情最新情况（3月14日发布）',
             'content': '截至3月13日24时，全省累计报告新型冠状病毒肺炎确诊病例1568例（其中境外输入940例），累计治愈出院1405例，死亡3例，目前在院隔离治疗160例，1784人尚在接受医学观察。',
             'detail_url_path': '',
@@ -216,3 +217,80 @@ def subscribe_vaccination_form(request, vaccination_id=1):
 
 def subscribe_vaccination_success(request):
     return TemplateResponse(request, 'custom/pages/activity/vaccination/subscribe_success.html')
+
+
+def hospital_list(request: HttpRequest):
+    hospital_data_list = [
+        {
+            'name': '四川大学华西医院',
+            'level_name': '三级甲等',
+            'address_name': '四川省成都市武侯区国学巷37号',
+            'badge_path': 'medical/images/hospital/badge/img_01.png',
+            'details_url': reverse('medical:hospital-details', kwargs={
+                'hospital_id': 1,
+            }),
+            'tag_data': {
+                '三级甲等', '可做核酸',
+            },
+            'statistic_data': {
+                'daily_visited_number': '1220',
+            },
+        },
+        {
+            'name': '四川省人民医院',
+            'level_name': '三级甲等',
+            'address_name': '成都市一环路西二段32号',
+            'badge_path': '/medical/images/hospital/badge/image_01.png',
+            'details_url': '',
+            'tag_data': {
+                '三级甲等', '可做核酸', '系统推荐',
+            },
+        },
+        {
+            'name': '四川省肿瘤医院',
+            'level_name': '三级甲等',
+            'address_name': '成都市人民南路55号',
+            'badge_path': '/medical/images/hospital/badge/image_01.png',
+            'details_url': '',
+            'tag_data': {
+                '三级甲等',
+            },
+        },
+        {
+            'name': '四川省人民医院',
+            'level_name': '三级甲等',
+            'address_name': '成都市一环路西二段32号',
+            'badge_path': '/medical/images/hospital/badge/image_01.png',
+            'details_url': '',
+            'tag_data': {
+                '三级甲等', '可做核酸', '系统推荐',
+            },
+        },
+        {
+            'name': '四川省第二人民医院',
+            'level_name': '三级甲等',
+            'address_name': '成都市一环路西二段32号',
+            'badge_path': '/medical/images/hospital/badge/image_01.png',
+            'details_url': '',
+            'tag_data': {
+                '三级甲等', '可做核酸',
+            },
+        },
+    ]
+    return TemplateResponse(request, 'custom/pages/hospital/index.html', context={
+        'hospital_data_list': hospital_data_list,
+    })
+
+
+def hospital_details(request, hospital_id):
+    hospital_details_data = {
+        'name': '四川大学华西医院',
+        'level_name': '三级甲等',
+        'address_name': '成都市人民南路55号',
+        'badge_path': '/medical/images/hospital/badge/img_01.png',
+        'description': '锦江春色来天地，玉垒浮云变古今。    在中国历史文化名城成都市锦江万里桥头的华西坝，有一座闻名遐迩的医学城，她就是四川大学华西临床医学院/华西医院。    追溯历史，华西医院起源于美国、加拿大、英国等国基督教会1892年在成都创建的仁济、存仁医院；华西临床医学院起源于1914年的华西协合大学医科，是由美、加、英等国教会按西方医学教育模式建立的医学院。1937年抗日战争全面爆发，中央大学、燕京大学、齐鲁大学、金陵大学、金陵女子文理学院内迁成都，与华西协合大学联合办学办医，是时，华西坝大师云集、名家汇萃、盛况空前。1938年，有医学院的华大、中大、齐大组建联合医院；1946年，华西协合大学医院在现址全部建成，简称华西医院。    1951年，新中国人民政府接管华西协合大学；1953年，经院系调整为四川医学院，医院更名为四川医学院附属医院；1985年，四川医学院更名为华西医科大学，医院更名为华西医科大学附属第一医院；2000年，四川大学与华西医科大学合并，2001年5月，学院/医院更名为四川大学华西临床医学',
+    }
+    return TemplateResponse(request, 'custom/pages/hospital/details.html', context={
+        'hospital_details_data': hospital_details_data,
+    })
+

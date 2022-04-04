@@ -1,0 +1,96 @@
+.hospital-details {
+    display: flex;
+    flex-flow: column nowrap;
+    max-width: 1180px;
+    width: 100%;
+    border-radius: 4px;
+    background-color: #fff;
+    box-sizing: border-box;
+    margin: 0 auto 20px;
+    padding: 28px 30px;
+}
+
+.hospital-details {
+    display: flex;
+    flex-flow: column nowrap;
+    max-width: 1180px;
+    width: 100%;
+    border-radius: 4px;
+    background-color: #fff;
+    box-sizing: border-box;
+    margin: 0 auto 20px;
+    padding: 28px 30px;
+}
+
+.hospital-details .content:nth-child(2) {
+    margin-top: 10px;
+}
+
+.hospital-details .content {
+    display: flex;
+    padding: 10px;
+}
+
+.hospital-details .content > .content-left {
+    width: 100px;
+    height: 100px;
+    border-radius: 4px;
+    border: 1px solid rgba(0, 0, 0, .05);
+    margin-right: 24px;
+    min-width: 100px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.hospital-details .content > .content-left > img {
+    height: 100%;
+    width: 100%;
+}
+
+.hospital-details .content > .content-right > .content-right-title {
+    display: flex;
+}
+
+.hospital-details .content > .content-right > .content-right-title > .tag-data {
+    margin-left: 20px;
+}
+
+.hospital-details .content > .content-right > .content-right-body {
+    margin-top: 10px;
+}
+
+.hospital-details .description-info {
+    margin-top: 30px;
+}
+
+.hospital-details .description-info .description-content-container {
+    padding: 10px;
+}
+
+.hospital-details .description-info .description-content {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #444c57;
+    word-break: break-all;
+}
+
+.text-over-hidden {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 5;
+}
+
+.hospital-details .description-info > .description-content-container > .about-more {
+    text-align: right;
+}
+
+.activity-list-content {
+    display: flex;
+    justify-content: space-around;
+}
+
+.activity-list-content-item {
+    width: 100px;
+}

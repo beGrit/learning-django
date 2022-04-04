@@ -1,0 +1,70 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block medical_page_css %}
+    <link rel="stylesheet" type="text/css" href="{% static "medical/css/page/custom-pages-hospital-details.css" %}">
+{% endblock %}
+{% block medical_page_js %}
+    <script src="{% static "medical/js/custom-pages-hospital-details.js" %}" type="application/javascript"></script>
+{% endblock %}
+{% block content %}
+    <div class="breadcrumb">
+        <h1 class="main-title">
+            <span>医院详情</span>
+        </h1>
+    </div>
+    <div class="hospital-details">
+        <div class="hospital-details-container">
+            <div class="basic-info part-root">
+                <h2 class="h2-color">医院基本信息</h2>
+                <div class="content">
+                    <div class="content-left">
+                        <img src="{% static hospital_details_data.badge_path %}" alt="hospital"/>
+                    </div>
+                    <div class="content-right">
+                        <div class="content-right-title">
+                            <div class="content-right-name">
+                                <a href="{{ hospital.details_url }}">
+                                    <h3>{{ hospital_details_data.name }}</h3>
+                                </a>
+                            </div>
+                            <div class="content-right-level_name">
+                                <span>{{ hospital_details_data.level_name }}</span>
+                            </div>
+                        </div>
+                        <div class="content-right-address_name">
+                            {{ hospital_details_data.address_name }}
+                        </div>
+                        <div class="content-right-telphone">
+                            联系方式
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="description-info part-root">
+                <h2 class="h2-color">医院简介</h2>
+                <div class="description-content-container">
+                    <article class="description-content text-over-hidden">
+                        {{ hospital_details_data.description }}
+                    </article>
+                    <div class="about-more">
+                        <button class="about-more-btn">展开全部</button>
+                    </div>
+                </div>
+            </div>
+            <div class="activity-list part-root">
+                <h2 class="h2-color">基本活动</h2>
+                <div class="activity-list-content">
+                    <div class="activity-list-content-item">
+                        <button>挂号预约</button>
+                    </div>
+                    <div class="activity-list-content-item">
+                        <button>疫苗预约</button>
+                    </div>
+                    <div class="activity-list-content-item">
+                        <button>在线问询</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

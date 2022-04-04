@@ -61,6 +61,10 @@ body {
     width: 65%;
 }
 
+.right-content-container {
+    width: 30%;
+}
+
 .page-title {
     margin-bottom: 50px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.25);
@@ -72,4 +76,11 @@ body {
     background-color: #fff;
     box-sizing: border-box;
     padding: 30px;
+}
+
+.vaccination-info {
+    width: 100%;
+    border-radius: 20px;
+    background-color: #fff;
+    box-sizing: border-box;
 }

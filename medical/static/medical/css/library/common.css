@@ -13,8 +13,6 @@ li {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-size: 100%;
-    font-weight: normal;
     margin: 0;
 }
 
@@ -53,7 +51,6 @@ body {
 }
 
 * {
-    font-size: 100%;
     box-sizing: border-box;
     -webkit-text-size-adjust: none;
     -ms-text-size-adjust: none;

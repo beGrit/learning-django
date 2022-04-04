@@ -9,3 +9,4 @@ channels_redis
 jupyter
 ipython
 redis
+django-bootstrap3

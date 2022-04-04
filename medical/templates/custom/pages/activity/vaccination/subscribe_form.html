@@ -1,4 +1,4 @@
-{% extends 'base/base.html' %}
+{% extends 'base/form_base.html' %}
 {% load static %}
 {% block medical_page_css %}
     <link rel="stylesheet" type="text/css"
@@ -7,7 +7,7 @@
 {% block medical_page_js %}
 {% endblock %}
 {% block content %}
-    <div class="left-content-container">
+    <div class="left-content-container content-container">
         <ol class="breadcrumb">
             <li>
                 <a href="{% url 'medical:home-page' %}">首页</a>
@@ -28,6 +28,10 @@
                     <input type="submit" value="提交">
                 </div>
             </form>
+        </div>
+    </div>
+    <div class="right-content-container content-container">
+        <div class="vaccination-info">
         </div>
     </div>
 {% endblock %}

@@ -1,5 +1,6 @@
 from django import forms
 from django.core import mail
+from django.forms import SelectDateWidget
 from django.template import Template, loader
 
 import medical.models
@@ -33,5 +34,6 @@ class VaccinationSubscribeForm(MedicalForm, forms.ModelForm):
         fields = '__all__'
         widgets = {
             'related_vaccination': medical.widget.DisplayNoneWidget(),
-            'subscribe_date_time': medical.widget.DisplayNoneWidget()
+            'subscribe_date_time': medical.widget.DisplayNoneWidget(),
+            'birth': SelectDateWidget(),
         }

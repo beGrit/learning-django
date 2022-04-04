@@ -8,10 +8,6 @@
     }
 }
 
-body {
-    background-color: #f2f3f5;
-}
-
 /* Home header. */
 
 .home-header {
@@ -145,14 +141,12 @@ body {
 }
 
 .home-article .title .title-text {
-    font-size: 2rem;
-    color: #252a33;
+    color: #00c792;
     font-weight: 500;
     line-height: 24px;
 }
 
 .home-article .title .title-more {
-    font-size: 1.6rem;
     color: #00c792;
 }
 

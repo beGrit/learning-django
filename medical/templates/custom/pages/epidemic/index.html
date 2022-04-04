@@ -4,13 +4,13 @@
     <link rel="stylesheet" type="text/css" href="{% static "medical/css/page/custom-pages-epidemic-index.css" %}">
 {% endblock %}
 {% block content %}
+    <div class="breadcrumb">
+        <h1 class="main-title">
+            <span>四川疫情实时数据报告</span>
+        </h1>
+    </div>
     <div class="epidemic-data">
         <div class="virus-data">
-            <div class="title">
-                <h1 class="main-title">
-                    <span>四川疫情实时数据报告</span>
-                </h1>
-            </div>
             <div class="content">
                 {% for virus_data_item in virus_data %}
                     <div class="virus-data-item">

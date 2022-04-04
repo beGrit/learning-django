@@ -1,0 +1,50 @@
+{% load static menu_tag %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+    </title>
+    <link rel="stylesheet" type="text/css" href="{% static "medical/css/base/base.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "admin/css/responsive.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "admin/css/widgets.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "medical/css/library/common.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "medical/css/components/menu.css" %}">
+    <script type="application/javascript" src="{% static "medical/js/base.js" %}"></script>
+    {% block medical_page_css %}
+    {% endblock %}
+    {% block medical_page_js %}
+    {% endblock %}
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+<body>
+<div id="container">
+    <div id="header">
+        <div id="branding">
+            <h1 id="site-name"><a href="/medical/">医疗系统 Medical System</a></h1>
+        </div>
+        <div id="user-tools">
+            {% if user.is_authenticated %}
+                <p>Welcome, {{ user.username }}</p>
+                <a href="{% url 'portal_auth:logout' %}">登出</a>
+            {% else %}
+                <a href="{% url 'portal_auth:login' %}">登录</a>
+            {% endif %}
+        </div>
+    </div>
+    <div id="header-menu" class="header-menu">
+        <span id="menu-show-button" class="addlink">Tap to show the menu</span>
+        {% menu_item_list %}
+    </div>
+    <div class="medical-main">
+        <div class="medical-main-container fix">
+            {% block content %}
+                <section id="main">
+                    Default content
+                </section>
+            {% endblock content %}
+        </div>
+    </div>
+</div>
+</body>
+</html>

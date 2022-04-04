@@ -87,6 +87,10 @@
 
 /* PAGE STRUCTURE */
 
+body {
+    background-color: #f2f3f5;
+}
+
 #container {
     position: relative;
     width: 100%;
@@ -241,7 +245,11 @@
     }
 }
 
-.main-title {
+.breadcrumb {
+    margin-bottom: 10px;
+}
+
+.breadcrumb .main-title {
     font-size: 16px;
     line-height: 18px;
     padding: 10px 0;

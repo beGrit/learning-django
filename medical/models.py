@@ -91,8 +91,9 @@ class Region(models.Model):
 
 
 class Hospital(models.Model):
-    code = models.CharField(blank=False, unique=True, help_text='The code for hospital', max_length=200)
+    code = models.CharField(blank=False, unique=True, help_text='The code for hospital.', max_length=200)
     name = models.CharField(blank=False, help_text='The name for hospital.', max_length=200)
+    description = models.TextField(blank=True, help_text='The description for hospital.')
     related_region = models.OneToOneField(blank=False, to=Region, on_delete=models.CASCADE)
 
 
@@ -172,6 +173,8 @@ class VaccinationSubscribe(Subscribe):
     telephone = models.CharField(blank=False, null=True, max_length=200, verbose_name='手机号码')
     email_address = models.EmailField(blank=True, verbose_name='邮箱地址')
     address = models.CharField(blank=True, max_length=200, verbose_name='家庭住址')
+    birth = models.DateField(blank=False, verbose_name='出生日期')
+    person_photo = models.FileField(blank=True, verbose_name='个人照片')
     related_vaccination = models.ForeignKey(to=Vaccination, on_delete=models.DO_NOTHING)
 
     def clean(self):
