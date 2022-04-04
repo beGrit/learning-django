@@ -1,5 +1,11 @@
 django
+django-extensions
 djangorestframework
 pymysql
 Pillow
 pyecharts
+channels
+channels_redis
+jupyter
+ipython
+redis

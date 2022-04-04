@@ -29,6 +29,8 @@ ALLOWED_HOSTS = ['*']
 # Application definition.
 
 INSTALLED_APPS = [
+    # Contrib apps.
+    'django_extensions',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -36,11 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'channels',
 
-    # Custom applications.
+    # Custom apps.
     'snippets.apps.SnippetsConfig',
     'weblog.apps.WeblogConfig',
     'medical.apps.MedicalConfig',
+    'chat.apps.ChatConfig',
 ]
 
 MIDDLEWARE = [
@@ -139,3 +143,14 @@ EMAIL_PORT = 25
 EMAIL_HOST_USER = '1134187280@qq.com'
 EMAIL_FROM = 'Pocky <1134187280@qq.com>'
 EMAIL_HOST_PASSWORD = 'xvybsihhwufzihbb'
+
+# ASGI settings.
+ASGI_APPLICATION = "learning.asgi.application"
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}

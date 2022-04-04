@@ -18,6 +18,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
+import chat.urls
 import weblog.urls
 import weblog.views
 import job.urls
@@ -28,6 +29,7 @@ urlpatterns = [
     path('weblog/', include(weblog.urls)),
     path('job/', include(job.urls)),
     path('medical/', include(medical.urls)),
+    path('chat/', include(chat.urls))
 ]
 
 urlpatterns += static(settings.UPLOADS_URL, document_root=settings.UPLOADS_ROOT)
