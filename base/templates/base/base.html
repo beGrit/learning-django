@@ -1,4 +1,4 @@
-{% load static menu_tag %}
+{% load static menu_tag bootstrap5 %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +10,9 @@
     <link rel="stylesheet" type="text/css" href="{% static "admin/css/widgets.css" %}">
     <link rel="stylesheet" type="text/css" href="{% static "medical/css/library/common.css" %}">
     <link rel="stylesheet" type="text/css" href="{% static "medical/css/components/menu.css" %}">
+    {% bootstrap_css %}
     <script type="application/javascript" src="{% static "medical/js/base.js" %}"></script>
+    {% bootstrap_javascript %}
     {% block medical_page_css %}
     {% endblock %}
     {% block medical_page_js %}
@@ -33,7 +35,6 @@
         </div>
     </div>
     <div id="header-menu" class="header-menu">
-        <span id="menu-show-button" class="addlink">Tap to show the menu</span>
         {% menu_item_list %}
     </div>
     <div class="medical-main">
@@ -46,5 +47,7 @@
         </div>
     </div>
 </div>
+{% block inline_script %}
+{% endblock %}
 </body>
 </html>

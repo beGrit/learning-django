@@ -1,10 +1,7 @@
 from django import forms
-from django.contrib.auth.models import User
 
 
-class LoginForm(forms.ModelForm):
-    template_name = 'admin/.html'
-
-    class Meta:
-        model = User
-        fields = ['username', 'password']
+class EmailLoginForm(forms.Form):
+    username = forms.CharField(max_length=100, required=True)
+    email = forms.CharField(max_length=100, required=True)
+    code = forms.CharField(max_length=10)

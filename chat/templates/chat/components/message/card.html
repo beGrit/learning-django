@@ -1,0 +1,13 @@
+{% load static %}
+<div class="chat_list {% if is_active %}active_chat{% endif %}">
+    <div class="chat_people">
+        <div class="chat_img"><img src="{{ card_data.user_info.avatar_path }}"
+                                   alt="Not Found">
+        </div>
+        <div class="chat_ib">
+            <h5>{{ card_data.user_info.name }} <span class="chat_date">{{ card_data.meta_info.last_send_time }}</span>
+            </h5>
+            <p>{{ card_data.message }}</p>
+        </div>
+    </div>
+</div>

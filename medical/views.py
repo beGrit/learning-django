@@ -293,4 +293,3 @@ def hospital_details(request, hospital_id):
     return TemplateResponse(request, 'custom/pages/hospital/details.html', context={
         'hospital_details_data': hospital_details_data,
     })
-

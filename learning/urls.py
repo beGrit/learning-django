@@ -18,18 +18,12 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
-import django.contrib.auth.urls
 import chat.urls
-import weblog.urls
-import weblog.views
-import job.urls
 import medical.urls
 import portal_auth.urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('weblog/', include(weblog.urls)),
-    path('job/', include(job.urls)),
     path('medical/', include(medical.urls)),
     path('chat/', include(chat.urls)),
     path('portal_auth/', include(portal_auth.urls)),

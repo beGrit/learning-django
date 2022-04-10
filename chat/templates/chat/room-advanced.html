@@ -1,7 +1,7 @@
 <!------ Include the above in your HEAD tag ---------->
 <!-- chat/templates/chat/room.html -->
 {% extends 'base/base.html' %}
-{% load static %}
+{% load static message %}
 {% block medical_page_css %}
     <link href="{% static 'chat/css/bootstrap.min.css' %}" type="text/css"
           rel="stylesheet">
@@ -34,34 +34,13 @@
                         </div>
                     </div>
                     <div class="inbox_chat">
-                        <div class="chat_list active_chat">
-                            <div class="chat_people">
-                                <div class="chat_img"><img src="https://ptetutorials.com/images/user-profile.png"
-                                                           alt="sunil"></div>
-                                <div class="chat_ib">
-                                    <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                                    <p>Test, which is a new approach to have all solutions
-                                        astrology under one roof.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="chat_list">
-                            <div class="chat_people">
-                                <div class="chat_img"><img src="https://ptetutorials.com/images/user-profile.png"
-                                                           alt="sunil"></div>
-                                <div class="chat_ib">
-                                    <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                                    <p>Test, which is a new approach to have all solutions
-                                        astrology under one roof.</p>
-                                </div>
-                            </div>
-                        </div>
+                        {% message_queue %}
                     </div>
                 </div>
                 <div class="mesgs">
                     <div class="msg_history">
                         {% for msg in msg_list %}
-                            {% if msg.type == 'incoming' %}
+                            {% if user.user_name != msg.user.user_name %}
                                 <div class="incoming_msg">
                                     <div class="incoming_msg_img"><img
                                             src="{% static msg.user.avatar_path %}"
@@ -69,15 +48,15 @@
                                     <div class="received_msg">
                                         <div class="received_withd_msg">
                                             <p>{{ msg.msg_data.data }}</p>
-                                            <span class="time_date"> {{ msg.datetime.time }} {{ msg.datetime.flag }}    | {{ msg.datetime.date }}</span>
+                                            <span class="time_date"> {{ msg.datetime.data }}</span>
                                         </div>
                                     </div>
                                 </div>
-                            {% elif msg.type == 'outgoing' %}
+                            {% elif user.user_name == msg.user.user_name %}
                                 <div class="outgoing_msg">
                                     <div class="sent_msg">
                                         <p>{{ msg.msg_data.data }}</p>
-                                        <span class="time_date"> {{ msg.datetime.time }} {{ msg.datetime.flag }}    | {{ msg.datetime.date }}</span>
+                                        <span class="time_date"> {{ msg.datetime.data }}</span>
                                     </div>
                                 </div>
                             {% endif %}
@@ -118,4 +97,11 @@
     </template>
     {{ room_name|json_script:"room-name" }}
     {{ user|json_script:"user-info" }}
+{% endblock %}
+{% block inline_script %}
+    <script type="application/javascript">
+        window.onload = function (e) {
+            document.querySelector('')
+        }
+    </script>
 {% endblock %}

@@ -9,4 +9,5 @@ channels_redis
 jupyter
 ipython
 redis
-django-bootstrap3
+django-bootstrap-v5
+django-autofixture

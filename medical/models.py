@@ -170,7 +170,8 @@ class Subscribe(models.Model):
 
 class VaccinationSubscribe(Subscribe):
     name = models.CharField(blank=False, null=True, max_length=200, verbose_name='姓名')
-    telephone = models.CharField(blank=False, null=True, max_length=200, verbose_name='手机号码')
+    telephone = models.CharField(blank=False, null=True, max_length=200, verbose_name='手机号码',
+                                 help_text='请输入 +08-XXXXXXXXXXX')
     email_address = models.EmailField(blank=True, verbose_name='邮箱地址')
     address = models.CharField(blank=True, max_length=200, verbose_name='家庭住址')
     birth = models.DateField(blank=False, verbose_name='出生日期')

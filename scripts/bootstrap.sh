@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
 docker start mariadb
-docker start redis
+docker start redis-chat

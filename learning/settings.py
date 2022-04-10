@@ -39,12 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'channels',
-    'bootstrap3',
+    'bootstrap5',
 
     # Custom apps.
     'base.apps.BaseConfig',
-    'snippets.apps.SnippetsConfig',
-    'weblog.apps.WeblogConfig',
+    # 'snippets.apps.SnippetsConfig',
+    # 'weblog.apps.WeblogConfig',
     'medical.apps.MedicalConfig',
     'chat.apps.ChatConfig',
     'portal_auth.apps.PortalAuthConfig',

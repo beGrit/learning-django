@@ -1,20 +1,25 @@
 from django import forms
 from django.core import mail
-from django.forms import SelectDateWidget
+from django.core.exceptions import FieldError
+from django.forms import HiddenInput, NumberInput
 from django.template import Template, loader
 
 import medical.models
 import medical.widget
 
 
-class MedicalForm(forms.models.BaseForm):
-    template_name = 'base/medical_form.html'
+class VaccinationSubscribeForm(forms.ModelForm):
 
-    class Meta:
-        pass
+    def clean(self):
+        super().clean()
+        if len(self.data.get('telephone')) != 0:
+            if len(self.data.get('telephone')) > 3:
+                pass
+            else:
+                self.add_error('telephone', FieldError())
+        else:
+            pass
 
-
-class VaccinationSubscribeForm(MedicalForm, forms.ModelForm):
     def after_save(self):
         template: Template = loader.get_template('custom/emails/vaccination_subscribe.html')
         body_data = template.render(context={
@@ -29,11 +34,12 @@ class VaccinationSubscribeForm(MedicalForm, forms.ModelForm):
             ],
             html_message=body_data)
 
-    class Meta(MedicalForm.Meta):
+    class Meta:
         model = medical.models.VaccinationSubscribe
         fields = '__all__'
         widgets = {
-            'related_vaccination': medical.widget.DisplayNoneWidget(),
-            'subscribe_date_time': medical.widget.DisplayNoneWidget(),
-            'birth': SelectDateWidget(),
+            'related_vaccination': HiddenInput(),
+            'birth': NumberInput(attrs={
+                'type': 'date',
+            }),
         }

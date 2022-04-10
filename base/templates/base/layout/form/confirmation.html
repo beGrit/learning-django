@@ -1,34 +1,6 @@
-{% extends 'base/layout/form/apply.html' %}
+{% extends 'base/layout/form/base_layout.html' %}
 {% load static bootstrap5 breadcrumb_tag %}
-{% block breadcrumb %}
-    {% breadcrumb '疫苗接种预约' %}
-{% endblock %}
-{% block form_title %}
-    疫苗接种预约
-{% endblock %}
-{% block help_text %}
-    请注意正确填写信息，并注意活动开始时间。
-{% endblock %}
-{% block form %}
-    <form action="{% url 'medical:activity-vaccination-subscribe-form' form.initial.related_vaccination.id %}"
-          method="POST" class="g-3 needs-validation">
-        {% csrf_token %}
-        {% bootstrap_form form %}
-        {% buttons submit='提交' reset="清空表单" %}{% endbuttons %}
-    </form>
-{% endblock %}
 {% block rightconent %}
-    <div>
-        <div class="card w-200">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk
-                    of
-                    the card's content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-        </div>
-    </div>
     <div class="common-cards border-top border-1 mt-5">
         <div class="card w-200 pt-3">
             <div class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg"

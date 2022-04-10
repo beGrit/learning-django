@@ -1,0 +1,39 @@
+{% extends 'base/layout/form/base_layout.html' %}
+{% load static bootstrap5 breadcrumb_tag %}
+{% block leftcontent %}
+    <div class="row">
+        <div class="breadcrumb">
+            {% block breadcrumb %}
+                {% breadcrumb '疫苗预约表单' %}
+            {% endblock %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="row mb-3">
+            <div class="title-container border-bottom border-2">
+                <h1 class="page-title">
+                    {% block form_title %}
+                        表单
+                    {% endblock %}
+                </h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="border-start border-4 border-primary">
+                <div class="container bg-light bg-gradient h-100">
+                    <p>
+                        {% block help_text %}
+                            请注意正确填写信息。
+                        {% endblock %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="shadow container rounded rounded-3 bg-white p-3">
+            {% block form %}
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}

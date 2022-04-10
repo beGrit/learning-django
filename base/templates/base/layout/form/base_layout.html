@@ -1,0 +1,20 @@
+{% extends 'base/base.html' %}
+{% load static bootstrap5 breadcrumb_tag %}
+{% block medical_page_css %}
+{% endblock %}
+{% block medical_page_js %}
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-around">
+            <div class="col-7 left-content">
+                {% block leftcontent %}
+                {% endblock %}
+            </div>
+            <div class="col-4 right-content border-start border-2 mt-5">
+                {% block rightconent %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

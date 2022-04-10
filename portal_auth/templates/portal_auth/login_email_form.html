@@ -1,0 +1,17 @@
+{% extends 'base/base.html' %}
+{% load static bootstrap5 %}
+{% block medical_page_css %}
+    <link rel="stylesheet" type="text/css"
+          href="{% static "portal_auth/css/login.css" %}">
+{% endblock %}
+{% block medical_page_js %}
+    <script src="{% static 'portal_auth/js/login_email.js' %}"></script>
+{% endblock %}
+{% block content %}
+    <h1>Login In</h1>
+    <form id='login-email-form' method="POST">
+        {% csrf_token %} {% bootstrap_form form %}
+        <button id="send-code" type="button">Send code</button>
+        <input type="submit" value="Login" class="btn btn-default"/>
+    </form>
+{% endblock %}
