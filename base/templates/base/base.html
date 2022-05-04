@@ -30,7 +30,7 @@
                 <p>Welcome, {{ user.username }}</p>
                 <a href="{% url 'portal_auth:logout' %}">登出</a>
             {% else %}
-                <a href="{% url 'portal_auth:login' %}">登录</a>
+                <a href="{% url 'portal_auth:login-page' %}">登录</a>
             {% endif %}
         </div>
     </div>

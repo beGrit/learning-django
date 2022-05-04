@@ -160,7 +160,7 @@ CHANNEL_LAYERS = {
 }
 
 # AUTH settings.
-LOGIN_URL = 'portal_auth:login'
+LOGIN_URL = 'portal_auth:login-page'
 OPEN_URLS = [
     {
         'medical': [

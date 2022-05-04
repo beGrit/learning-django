@@ -1,0 +1,82 @@
+{% extends 'base/base.html' %}
+{% load static bootstrap5 %}
+{% block medical_page_css %}
+    <link rel="stylesheet" type="text/css"
+          href="{% static "portal_auth/css/login.css" %}">
+{% endblock %}
+{% block content %}
+    <div class="container form-container">
+        <div class="row justify-content-center">
+            <div class="col-6">
+                <h1>Login In</h1>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-6">
+                <ul class="nav nav-tabs">
+                    {% for key, value in data.items %}
+                        {% if value.active %}
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page"
+                                   href="{% url 'portal_auth:login-page' %}?type={{ key }}">{{ value.display_value }}</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   href="{% url 'portal_auth:login-page' %}?type={{ key }}">{{ value.display_value }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-6">
+                <form id="login-form" method="POST" action="{% url 'portal_auth:login-page' %}?type={{ login_type }}">
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                    {% if login_type == 'email' %}
+                        {% buttons %}
+                            <button type="button" id="email-send-code-btn" class="btn btn-success">
+                                Send Code
+                            </button>
+                        {% endbuttons %}
+                    {% endif %}
+                    {% buttons submit='OK' reset="Cancel" %}
+                    {% endbuttons %}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block inline_script %}
+    <script>
+        window.onload = function (e) {
+            const btn = document.querySelector('#email-send-code-btn')
+            let email = document.querySelector('#login-form #id_email')
+            if (email !== undefined) {
+                btn.addEventListener('click', e => {
+                    fetch('{% url 'portal_auth:login-email-send-code' %}', {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            'email': email.value,
+                        }),
+                        headers: {
+                            'user-agent': 'Mozilla/4.0 MDN Example',
+                            'content-type': 'application/json'
+                        },
+                    }).then(response => {
+                        if (response.code === 200) {
+                            console.log('发送成功!!!')
+                        } else if (response.code === 400) {
+                            console.log('Params error.')
+                        }
+                        return response.json()
+                    }).then(json => {
+                        alert(json.message)
+                    })
+                })
+            }
+        }
+    </script>
+{% endblock %}
