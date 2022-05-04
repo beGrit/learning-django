@@ -1,23 +1,22 @@
 import datetime
 
 from django import urls
+from django.db import transaction
 from django.http import HttpResponseRedirect, HttpRequest
 from django.template.response import TemplateResponse
-from django.db import transaction
 from django.urls import reverse
-
-from medical.forms import VaccinationSubscribeForm
-from medical.models import Vaccination
-
 from pyecharts.charts import Bar, Pie
+
+from medical.forms import VaccinationSubscribeForm, VolunteerRegisterForm
+from medical.models import Vaccination, Volunteer
 
 
 def home_page(request):
     home_banner_items = [
         {
             'details_url_path': '',
-            'title': '查疾病',
-            'description': '不知道生啥病了？快来看看权威疾病百科',
+            'title': '查疫苗',
+            'description': '快来看看最新的疫苗',
         },
         {
             'details_url_path': '',
@@ -25,24 +24,24 @@ def home_page(request):
             'description': '不知道吃啥药？快来看看药品信息大全',
         },
         {
+            'details_url_path': '',
+            'title': '查器材',
+            'description': '看看有哪些有用的器材',
+        },
+        {
             'details_url_path': reverse('medical:hospital-index'),
             'title': '查医院',
             'description': '看看附近有哪些医院？',
         },
         {
-            'details_url_path': '',
-            'title': '查疫苗',
-            'description': '疫苗还有多少？哪些疫苗适合你呢？',
+            'details_url_path': reverse('medical:hospital-index'),
+            'title': '查医生',
+            'description': '看看有哪些医生',
         },
         {
-            'details_url_path': '',
-            'title': '测一测',
-            'description': '你是否困惑自己是不是到底生病了没？这里有专业的试题，评估您的问题',
-        },
-        {
-            'details_url_path': '',
-            'title': '医疗小视频',
-            'description': '快来小视频广场，释放释放你的患病焦虑',
+            'details_url_path': reverse('medical:activity-vaccination-subscribe'),
+            'title': '查看疫苗接种活动',
+            'description': '查看疫苗接种活动',
         },
     ]
     popularization_articles = [
@@ -232,9 +231,6 @@ def hospital_list(request: HttpRequest):
             'tag_data': {
                 '三级甲等', '可做核酸',
             },
-            'statistic_data': {
-                'daily_visited_number': '1220',
-            },
         },
         {
             'name': '四川省人民医院',
@@ -292,4 +288,26 @@ def hospital_details(request, hospital_id):
     }
     return TemplateResponse(request, 'custom/pages/hospital/details.html', context={
         'hospital_details_data': hospital_details_data,
+    })
+
+
+def news_list(request):
+    pass
+
+
+def volunteer_register_form(request: HttpRequest):
+    if request.method == 'POST':
+        form = VolunteerRegisterForm(request.POST)
+        form.full_clean()
+        if form.is_valid():
+            with transaction.atomic():
+                model: Volunteer = form.save(commit=False)
+                model.support_type = 1
+                model.work_year = 0
+                model.save()
+                return HttpResponseRedirect(urls.reverse('medical:activity-vaccination-subscribe-success'))
+    else:
+        form = VolunteerRegisterForm()
+    return TemplateResponse(request, 'custom/pages/volunteer/register_form.html', {
+        'form': form
     })

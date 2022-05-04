@@ -1,0 +1,20 @@
+{% if data.type == 'outgoing' %}
+    <div class="outgoing_msg">
+        <div class="sent_msg">
+            <p>{{ data.msg_data.data }}</p>
+            <span class="time_date">{{ data.datetime }}</span>
+        </div>
+    </div>
+{% elif data.type == 'incoming' %}
+    <div class="incoming_msg">
+        <div class="incoming_msg_img"><img
+                src="{{ data.user.avatar_path }}"
+                alt="sunil"></div>
+        <div class="received_msg">
+            <div class="received_withd_msg">
+                <p>{{ data.msg_data.data }}</p>
+                <span class="time_date">{{ data.datetime }}</span>
+            </div>
+        </div>
+    </div>
+{% endif %}

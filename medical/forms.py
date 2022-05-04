@@ -1,7 +1,7 @@
 from django import forms
 from django.core import mail
 from django.core.exceptions import FieldError
-from django.forms import HiddenInput, NumberInput
+from django.forms import HiddenInput, NumberInput, DateInput
 from django.template import Template, loader
 
 import medical.models
@@ -40,6 +40,19 @@ class VaccinationSubscribeForm(forms.ModelForm):
         widgets = {
             'related_vaccination': HiddenInput(),
             'birth': NumberInput(attrs={
+                'type': 'date',
+            }),
+        }
+
+
+class VolunteerRegisterForm(forms.ModelForm):
+    class Meta:
+        model = medical.models.Volunteer
+        fields = [
+            'name', 'gender', 'age', 'profile_picture',
+            'work_date', 'is_student', 'no_salary', 'related_activity']
+        widgets = {
+            'work_date': NumberInput(attrs={
                 'type': 'date',
             }),
         }

@@ -1,0 +1,27 @@
+{% load static %}
+{% if vaccinations.len != 0 %}
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwo">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                Vaccination Group 疫苗接种群组
+            </button>
+        </h2>
+        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+             data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                {% for vaccination in vaccinations %}
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ vaccination.title }}</h5>
+                            <p class="card-text">{{ vaccination.description }}</p>
+                            <button type="button" class="btn btn-success">
+                                <a href="{% url 'chat:chat-to-vaccination-group' vaccination.id %}">加入群组</a>
+                            </button>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endif %}

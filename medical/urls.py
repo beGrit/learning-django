@@ -19,6 +19,8 @@ urlpatterns = [
          name='hospital-index'),
     path('custom/hospital/details/<int:hospital_id>', medical.views.hospital_details,
          name='hospital-details'),
+    path('custom/volunteer/register/form', medical.views.volunteer_register_form,
+         name='volunteer-register-form')
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

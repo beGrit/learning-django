@@ -58,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'base.middleware.loginrequired.LoginRequiredMiddleware',
 ]
 
 # URL Patterns
@@ -157,3 +158,14 @@ CHANNEL_LAYERS = {
         },
     },
 }
+
+# AUTH settings.
+LOGIN_URL = 'portal_auth:login'
+OPEN_URLS = [
+    {
+        'medical': [
+            'home-page',
+            'hospital-index',
+        ]
+    }
+]

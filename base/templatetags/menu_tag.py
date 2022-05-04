@@ -28,12 +28,16 @@ def menu_item_list():
                 'name': '疫情信息专栏',
             },
             {
-                'path': 'medical:home-page',
+                'path': 'medical:volunteer-register-form',
                 'name': '志愿者申请',
             },
             {
                 'path': 'medical:activity-vaccination-subscribe',
                 'name': '疫苗预约',
             },
+            {
+                'path': 'chat:available-chat-rooms',
+                'name': '聊天室',
+            }
         ]
     }

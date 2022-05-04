@@ -1,0 +1,4 @@
+{% load static %}
+{% for data in data_list %}
+    {% include 'chat/components/message/message/message.html' with data=data %}
+{% endfor %}

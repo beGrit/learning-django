@@ -1,0 +1,59 @@
+<!------ Include the above in your HEAD tag ---------->
+<!-- chat/templates/chat/room.html -->
+{% extends 'base/base.html' %}
+{% load static message %}
+{% block medical_page_css %}
+    <link href="{% static 'chat/css/bootstrap.min.css' %}" type="text/css"
+          rel="stylesheet">
+    <link href="{% static 'chat/css/font-awesome.css' %}" type="text/css"
+          rel="stylesheet">
+    <link href="{% static 'chat/css/room-advanced.css' %}" type="text/css"
+          rel="stylesheet">
+{% endblock %}
+{% block medical_page_js %}
+    <script src="{% static 'chat/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'chat/js/jquery.min.js' %}"></script>
+    <script src="{% static 'chat/js/room_advanced.js' %}"></script>
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <h3 class=" text-center">聊天室</h3>
+        <div class="messaging">
+            <div class="inbox_msg">
+                <div class="inbox_people">
+                    <div class="headind_srch">
+                        <div class="recent_heading">
+                            <h4>消息列表</h4>
+                        </div>
+                        <div class="srch_bar">
+                            <div class="stylish-input-group">
+                                <input type="text" class="search-bar" placeholder="搜索">
+                                <span class="input-group-addon">
+                <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
+                </span></div>
+                        </div>
+                    </div>
+                    <div class="inbox_chat">
+                        {% message_queue user_id=request.user.id %}
+                    </div>
+                </div>
+                <div class="mesgs">
+                    <div class="msg_history">
+                        {% message_detail user_id=request.user.id chat_room_id=chat_room_id %}
+                    </div>
+                    <div class="type_msg">
+                        <div class="input_msg_write">
+                            <input id="chat-message-input" type="text" class="write_msg" placeholder="请输入聊天内容"/>
+                            <button id="chat-message-submit" class="msg_send_btn" type="button"><i
+                                    class="bi bi-arrow-bar-up"
+                                    aria-hidden="true"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ chat_room_id|json_script:"chat-room-id" }}
+    {{ room_name|json_script:"room-name" }}
+    {{ user_id|json_script:"current-user-id" }}
+{% endblock %}

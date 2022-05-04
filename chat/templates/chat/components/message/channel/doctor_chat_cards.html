@@ -1,0 +1,31 @@
+{% load static %}
+{% if doctors.len != 0 %}
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseOne"
+                    aria-expanded="false" aria-controls="collapseOne">
+                Doctors 医生
+            </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+             data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                {% for doctor in doctors %}
+                    <div class="card" style="width: 18rem;">
+                        <img src="{% get_media_prefix %}{{ doctor.profile_picture }}"
+                             class="img-thumbnail rounded"
+                             alt="NOT FOUND">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ doctor.name }}</h5>
+                            <p class="card-text">{{ doctor.description }}</p>
+                            <button type="button" class="btn btn-success">
+                                <a href="{% url 'chat:chat-to-user' doctor.related_user.id %}">和他聊天</a>
+                            </button>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endif %}
