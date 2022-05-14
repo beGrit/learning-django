@@ -11,3 +11,4 @@ ipython
 redis
 django-bootstrap-v5
 django-autofixture
+jieba

@@ -5,9 +5,9 @@ from django.contrib import admin, messages
 from django.contrib.contenttypes.models import ContentType
 from django.http import HttpResponseRedirect
 
-from chat.models import ChatRoom, Message
+from chat.models import ChatRoom, Message, OfficialAccount, AutoReply
 from medical.models import Drug, News, Doctor, Hospital, Vaccination, Equipment, Nurse, Patient, Vaccine, Volunteer, \
-    Staff, DailyIncreaseVirusData, StaticsVirusData
+    Staff, DailyIncreaseVirusData, StaticsVirusData, VaccinationSubscribe
 
 
 # Medical admin.
@@ -140,16 +140,10 @@ class VaccinationAdmin(BaseAdmin):
         pass
 
 
-# Chat admin.
-@admin.register(ChatRoom)
-class ChatRoomAdmin(BaseAdmin):
-    def get_list_display(self, request):
-        return ['title', 'type', 'open_date_time']
-
-
-@admin.register(Message)
-class MessageAdmin(BaseAdmin):
-    list_display = ['publisher', 'related_chat_content_collection', 'publish_date_time']
+@admin.register(VaccinationSubscribe)
+class VaccinationSubscribeAdmin(BaseAdmin):
+    list_display = ['name', 'telephone', 'email_address', 'birth', ]
+    pass
 
 
 @admin.register(Staff)
@@ -192,6 +186,28 @@ class DailyIncreaseVirusDataAdmin(BaseAdmin):
 @admin.register(StaticsVirusData)
 class StaticsVirusDataAdmin(BaseAdmin):
     list_display = ['label', 'type', 'definite', 'cure', 'dead', 'asymptomatic']
+
+
+# Chat admin.
+@admin.register(ChatRoom)
+class ChatRoomAdmin(BaseAdmin):
+    def get_list_display(self, request):
+        return ['title', 'type', 'open_date_time']
+
+
+@admin.register(Message)
+class MessageAdmin(BaseAdmin):
+    list_display = ['publisher', 'publish_date_time']
+
+
+@admin.register(OfficialAccount)
+class OfficialAccountAdmin(BaseAdmin):
+    list_display = ['name', 'description']
+
+
+@admin.register(AutoReply)
+class AutoReplyAdmin(BaseAdmin):
+    list_display = ['word', 'content']
 
 
 models = apps.get_models()

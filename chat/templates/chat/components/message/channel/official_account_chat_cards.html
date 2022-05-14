@@ -3,28 +3,28 @@
     <div class="accordion-item">
         <h2 class="accordion-header" id="headingOne">
             <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseOne"
-                    aria-expanded="false" aria-controls="collapseOne">
+                    data-bs-target="#collapseThree"
+                    aria-expanded="false" aria-controls="collapseThree">
                 Official Account 公众号聊天
             </button>
         </h2>
-        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
              data-bs-parent="#accordionExample">
             <div class="accordion-body">
                 <div class="container">
                     <div class="row row-cols-3">
-                        {% for doctor in doctors %}
+                        {% for item in official_accounts %}
                             <div class="col">
                                 <div class="card" style="width: 18rem;">
-                                    <img src="{% get_media_prefix %}{{ doctor.profile_picture }}"
+                                    <img src="{% get_media_prefix %}{{ item.profile_picture }}"
                                          class="img-thumbnail rounded"
                                          alt="NOT FOUND"
                                     width="200">
                                     <div class="card-body">
-                                        <h5 class="card-title">{{ doctor.name }}</h5>
-                                        <p class="card-text">{{ doctor.description }}</p>
+                                        <h5 class="card-title">{{ item.name }}</h5>
+                                        <p class="card-text">{{ item.description }}</p>
                                         <button type="button" class="btn btn-outline-primary">
-                                            <a href="{% url 'chat:chat-to-user' doctor.related_user.id %}">和他聊天</a>
+                                            <a href="{% url 'chat:chat-to-official-account' item.id %}">和他聊天</a>
                                         </button>
                                     </div>
                                 </div>

@@ -18,10 +18,10 @@ class TelPhoneField(models.CharField):
     @staticmethod
     def tel_phone_validate(value: str):
         if len(value) != 0:
-            pattern = re.compile(r'^([0-9]{2}-[0-9]{11})$')
+            pattern = re.compile(r'^([0-9]{2}\-[0-9]{11})$')
             is_match = re.match(pattern, value)
             if is_match is None:
-                raise ValidationError("This is not valid tel-phone number, please input +XX-XXXXXXXXXXX.")
+                raise ValidationError("This is not valid tel-phone number, please input XX-XXXXXXXXXXX.")
             else:
                 return value
 

@@ -46,13 +46,16 @@ def home_page(request):
         },
     ]
     news_arr = list(News.objects.all().order_by('-publish_date_time')[:5])
-    popularization_articles = []
-    for news in news_arr:
-        popularization_articles.append({
-            'facade_image_url_path': news.image_url_path,
-            'title': news.title,
-            'content': news.content,
-        })
+    if news_arr is not None:
+        popularization_articles = []
+        for news in news_arr:
+            popularization_articles.append({
+                'facade_image_url_path': news.image_url_path,
+                'title': news.title,
+                'content': news.content,
+            })
+    else:
+        popularization_articles = None
     return TemplateResponse(request,
                             'custom/pages/home/home.html',
                             context={
@@ -257,7 +260,7 @@ def hospital_details(request, hospital_id):
 def news_list(request):
     news_arr = list(News.objects.all())
     if len(news_arr) == 0:
-        raise Http404
+        news_arr = None
     return render(request, 'custom/pages/news/news_list.html', {
         'data': news_arr,
     })

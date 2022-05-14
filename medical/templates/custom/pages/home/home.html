@@ -1,14 +1,11 @@
 {% extends 'base/base.html' %}
-{% load static %}
+{% load static empty %}
 {% block medical_page_css %}
     <link rel="stylesheet" type="text/css" href="{% static "medical/css/page/custom-pages-home-home.css" %}">
 {% endblock %}
 {% block content %}
     <div class="home-header">
         <div class="home-header-container">
-{#            <div class="search-input-container">#}
-{#                {% include 'custom/components/home-search-bar.html' %}#}
-{#            </div>#}
             <div class="home-banner">
                 {% for home_banner_item in home_banner_items %}
                     {% include 'custom/components/home-banner-item.html' %}
@@ -25,13 +22,17 @@
                    rel="">查看更多</a>
             </div>
             <div class="content-list shadow container rounded rounded-3 bg-white p-3">
-                {% for home_article in home_article.popularization_articles %}
-                    {% if forloop.counter0 > 0 %}
-                        {% include 'custom/components/home-artitle-item-card.html' with grater_second_class='grater-second-article-card' %}
-                    {% else %}
-                        {% include 'custom/components/home-artitle-item-card.html' %}
-                    {% endif %}
-                {% endfor %}
+                {% if popularization_articles is not None %}
+                    {% for home_article in home_article.popularization_articles %}
+                        {% if forloop.counter0 > 0 %}
+                            {% include 'custom/components/home-artitle-item-card.html' with grater_second_class='grater-second-article-card' %}
+                        {% else %}
+                            {% include 'custom/components/home-artitle-item-card.html' %}
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    {% show_empty %}
+                {% endif %}
             </div>
         </div>
     </div>

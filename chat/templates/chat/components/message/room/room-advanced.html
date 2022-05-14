@@ -25,13 +25,6 @@
                         <div class="recent_heading">
                             <h4>消息列表</h4>
                         </div>
-                        <div class="srch_bar">
-                            <div class="stylish-input-group">
-                                <input type="text" class="search-bar" placeholder="搜索">
-                                <span class="input-group-addon">
-                <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
-                </span></div>
-                        </div>
                     </div>
                     <div class="inbox_chat">
                         {% message_queue user_id=request.user.id %}
@@ -56,4 +49,5 @@
     {{ chat_room_id|json_script:"chat-room-id" }}
     {{ room_name|json_script:"room-name" }}
     {{ user_id|json_script:"current-user-id" }}
+    {{ room_type|json_script:"room-type" }}
 {% endblock %}

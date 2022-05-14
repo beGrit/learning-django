@@ -16,15 +16,16 @@
     <script src="{% static 'chat/js/room_advanced.js' %}"></script>
 {% endblock %}
 {% block content %}
+    <div class="breadcrumb">
+        <h1 class="main-title">
+            <span>聊天频道</span>
+        </h1>
+    </div>
     <div class="container">
-        <div class="breadcrumb">
-            <h1 class="main-title">
-                <span>聊天频道</span>
-            </h1>
-        </div>
         <div class="accordion" id="accordionExample">
             {% include 'chat/components/message/channel/doctor_chat_cards.html' with doctors=doctors %}
             {% include 'chat/components/message/channel/vaccination_chat_cards.html' with vaccinations=vaccinations %}
+            {% include 'chat/components/message/channel/official_account_chat_cards.html' with official_accounts=official_accounts %}
         </div>
     </div>
 {% endblock %}

@@ -2,11 +2,13 @@ window.onload = function (e) {
     const current_user_id = JSON.parse(document.querySelector('#current-user-id').textContent)
     const chat_room_id = JSON.parse(document.querySelector('#chat-room-id').textContent)
     const msg_history = document.querySelector('.msg_history')
-
+    const room_type = JSON.parse(document.querySelector('#room-type').textContent)
     const solo_chat_socket = new WebSocket(
         'ws://'
         + window.location.host
-        + '/ws/chat/solo/'
+        + '/ws/chat/'
+        + room_type
+        + '/'
         + chat_room_id
         + '/'
     )
@@ -15,6 +17,7 @@ window.onload = function (e) {
     solo_chat_socket.onmessage = function (e) {
         let div = document.createElement('div')
         e.data.text().then(text => {
+            console.log(text)
             div.innerHTML = text
         })
         msg_history.appendChild(div)

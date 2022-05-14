@@ -1,7 +1,6 @@
 from django import forms
 from django.core import mail
-from django.core.exceptions import FieldError
-from django.forms import HiddenInput, NumberInput, DateInput
+from django.forms import HiddenInput, NumberInput
 from django.template import Template, loader
 
 import medical.models
@@ -9,16 +8,6 @@ import medical.widget
 
 
 class VaccinationSubscribeForm(forms.ModelForm):
-
-    def clean(self):
-        super().clean()
-        if len(self.data.get('telephone')) != 0:
-            if len(self.data.get('telephone')) > 3:
-                pass
-            else:
-                self.add_error('telephone', FieldError())
-        else:
-            pass
 
     def after_save(self):
         template: Template = loader.get_template('custom/emails/vaccination_subscribe.html')

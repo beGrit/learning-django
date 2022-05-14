@@ -51,6 +51,9 @@ class Region(models.Model):
     longitude = models.FloatField(blank=False, help_text='The longitude for hospital.')
     latitude = models.FloatField(blank=False, help_text='The latitude for hospital location.')
 
+    def __str__(self):
+        return str(self.longitude) + ', ' + str(self.latitude)
+
 
 class Hospital(models.Model):
     code = models.CharField(blank=False, unique=True, help_text='The code for hospital.', max_length=200)
@@ -79,6 +82,9 @@ Activity resources
 class Vaccine(models.Model):
     name = models.CharField(blank=False, null=True, max_length=200)
     description = models.TextField(blank=True)
+
+    def __str__(self):
+        return self.name
 
 
 class DailyIncreaseVirusData(models.Model):
@@ -251,6 +257,9 @@ class Vaccination(COVIDActivity):
     related_vaccine = models.ForeignKey(null=True, to=Vaccine, on_delete=models.SET_NULL)
     amount_of_subscribe = models.PositiveIntegerField()
     amount_of_vaccine = models.PositiveIntegerField()
+
+    def __str__(self):
+        return self.title
 
     @property
     def is_due(self) -> bool:

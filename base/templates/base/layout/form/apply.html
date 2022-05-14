@@ -1,12 +1,10 @@
 {% extends 'base/layout/form/base_layout.html' %}
 {% load static bootstrap5 breadcrumb_tag %}
 {% block leftcontent %}
-    <div class="row">
-        <div class="breadcrumb">
-            {% block breadcrumb %}
-                {% breadcrumb '疫苗预约表单' %}
-            {% endblock %}
-        </div>
+    <div class="breadcrumb">
+        <h1 class="main-title">
+            <span>{% block breadcrumb_content %}申请表单{% endblock %}</span>
+        </h1>
     </div>
     <div class="row">
         <div class="row mb-3">

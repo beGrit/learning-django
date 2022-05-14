@@ -1,7 +1,7 @@
 <!------ Include the above in your HEAD tag ---------->
 <!-- chat/templates/chat/room.html -->
 {% extends 'base/base.html' %}
-{% load static message %}
+{% load static message empty %}
 {% block medical_page_css %}
     <link href="{% static 'chat/css/bootstrap.min.css' %}" type="text/css"
           rel="stylesheet">
@@ -22,6 +22,9 @@
                 <span>最新新闻</span>
             </h1>
         </div>
+        {% if data is None %}
+            {% show_empty %}
+        {% endif %}
         <div class="accordion" id="newsAccordion">
             {% for data_item in data %}
                 {% include 'custom/components/news/news.html' with data_item=data_item %}
