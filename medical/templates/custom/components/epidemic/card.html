@@ -1,0 +1,22 @@
+<div class="epidemic-data">
+    <span>{{ virus_data_item.description }}</span>
+    <div class="virus-data">
+        <div class="content">
+            {% for item in virus_data_item.items %}
+                <div class="virus-data-item">
+                        <span>
+                            {{ item.label }}
+                        </span>
+                    <p>
+                        {{ item.data }}
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="grow-chart">
+        {% for item in virus_data_item.charts %}
+            {{ item|safe }}
+        {% endfor %}
+    </div>
+</div>

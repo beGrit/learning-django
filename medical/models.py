@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils import timezone
+from django.core import mail
+from pyecharts.charts import Bar, Pie
 
 from medical.extend import fields as extend_model_fields
 
@@ -22,6 +24,10 @@ class Drug(models.Model):
     onboard_date_time = models.DateTimeField(help_text='The drug onboard date time.')
     sales_volume = models.FloatField(blank=True, help_text='销售量')
     storage_volume = models.FloatField(blank=True, help_text='存储量')
+    publish_status = models.IntegerField(choices=[
+        (0, 'unpublished'),
+        (1, 'published'),
+    ])
 
 
 class Equipment(models.Model):
@@ -52,11 +58,17 @@ class Hospital(models.Model):
     description = models.TextField(blank=True, help_text='The description for hospital.')
     related_region = models.OneToOneField(blank=False, to=Region, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.name
+
 
 class BuildArea(models.Model):
     code_number = models.CharField(blank=False, unique=True, help_text='The office builder code number', max_length=200)
     name = models.CharField(blank=False, max_length=200)
     related_hospital = models.ForeignKey(blank=False, to=Hospital, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
 
 
 '''
@@ -66,21 +78,148 @@ Activity resources
 
 class Vaccine(models.Model):
     name = models.CharField(blank=False, null=True, max_length=200)
-    pass
+    description = models.TextField(blank=True)
 
 
 class DailyIncreaseVirusData(models.Model):
     definite = models.PositiveIntegerField(verbose_name='确诊')
-    cure = models.PositiveIntegerField(verbose_name='本土')
-    dead = models.PositiveIntegerField(verbose_name='境外输入')
+    cure = models.PositiveIntegerField(verbose_name='治愈')
+    dead = models.PositiveIntegerField(verbose_name='死亡')
     asymptomatic = models.PositiveIntegerField(verbose_name='无症状')
     date = models.DateField()
 
+    def get_items(self):
+        return [
+            {
+                'label': '确诊',
+                'data': self.definite,
+            },
+            {
+                'label': '治愈',
+                'data': self.cure,
+            },
+            {
+                'label': '死亡',
+                'data': self.dead,
+            },
+            {
+                'label': '无症状',
+                'data': self.asymptomatic,
+            },
+        ]
+
+    def render_as_bar(self):
+        items = self.get_items()
+        x_axis = []
+        data_axis = []
+        for item in items:
+            x_axis.append(item['label'])
+            data_axis.append(item['data'])
+        # Build the bar chart.
+        bar = Bar(init_opts={
+            'width': '500px',
+            'height': '300px',
+        })
+        bar.add_xaxis(x_axis)
+        bar.add_yaxis("今日疫情走势", y_axis=data_axis, color='#FF6A57')
+        bar_data = bar.render_embed()
+        return bar_data
+
+    def render_as_pie(self):
+        items = self.get_items()
+        # Build the pie chart.
+        pie = Pie(init_opts={
+            'width': '500px',
+            'height': '600px',
+        })
+        pie_data_pair = []
+        for data_item in items:
+            pie_data_pair.append([
+                data_item['label'],
+                data_item['data'],
+            ])
+        pie.add(series_name='', data_pair=pie_data_pair)
+        pie_data = pie.render_embed()
+        return pie_data
+
 
 class StaticsVirusData(models.Model):
-    definite = models.PositiveIntegerField(verbose_name='确诊')
-    cure = models.PositiveIntegerField(verbose_name='治愈')
-    dead = models.PositiveIntegerField(verbose_name='死亡')
+    label = models.TextField(max_length=400, unique=True, primary_key=False)
+    definite = models.PositiveIntegerField(verbose_name='累计确诊')
+    cure = models.PositiveIntegerField(verbose_name='累计治愈')
+    dead = models.PositiveIntegerField(verbose_name='累计死亡')
+    asymptomatic = models.PositiveIntegerField(verbose_name='累计无症状')
+    publish_status = models.IntegerField(
+        verbose_name='发布状态',
+        default=0,
+        choices=[
+            (0, 'unpublished'),
+            (1, 'published'),
+        ]
+    )
+    type = models.IntegerField(
+        verbose_name='数据类型',
+        default=0,
+        choices=[
+            (0, 'all'),
+            (1, 'period'),
+        ]
+    )
+    description = models.TextField(blank=True)
+
+    def get_items(self):
+        return [
+            {
+                'label': '累计确诊',
+                'data': self.definite,
+            },
+            {
+                'label': '累计治愈',
+                'data': self.cure,
+            },
+            {
+                'label': '累计死亡',
+                'data': self.dead,
+            },
+            {
+                'label': '累计无症状',
+                'data': self.asymptomatic,
+            },
+        ]
+
+    def render_as_bar(self):
+        items = self.get_items()
+        x_axis = []
+        data_axis = []
+        for item in items:
+            x_axis.append(item['label'])
+            data_axis.append(item['data'])
+        # Build the bar chart.
+        bar = Bar(init_opts={
+            'width': '500px',
+            'height': '300px',
+        })
+        bar.add_xaxis(x_axis)
+        bar.add_yaxis("今日疫情走势", y_axis=data_axis, color='#FF6A57')
+        bar_data = bar.render_embed()
+        return bar_data
+
+    def render_as_pie(self):
+        items = self.get_items()
+        # Build the pie chart.
+        pie = Pie(init_opts={
+            'width': '500px',
+            'height': '600px',
+        })
+        pie_data_pair = []
+        for data_item in items:
+            pie_data_pair.append([
+                data_item['label'],
+                data_item['data'],
+            ])
+        pie.add(series_name='', data_pair=pie_data_pair)
+        pie_data = pie.render_embed()
+        return pie_data
 
 
 '''
@@ -103,6 +242,9 @@ class COVIDActivity(Activity):
     process_date_time = models.DateTimeField()
     publish_date_time = models.DateTimeField()
 
+    def __str__(self):
+        return self.title
+
 
 class Vaccination(COVIDActivity):
     related_builder_area = models.ForeignKey(to=BuildArea, on_delete=models.CASCADE)
@@ -121,6 +263,12 @@ class Vaccination(COVIDActivity):
     def full_area(self) -> str:
         return self.related_builder_area.related_hospital.name + self.related_builder_area.name
 
+    def subscribe_status(self, new_subscribes=0):
+        if self.amount_of_subscribe + new_subscribes >= self.amount_of_vaccine:
+            return False
+        else:
+            return True
+
 
 class Subscribe(models.Model):
     subscribe_date_time = models.DateTimeField(blank=True, auto_now_add=True)
@@ -131,8 +279,8 @@ class Subscribe(models.Model):
 
 class VaccinationSubscribe(Subscribe):
     name = models.CharField(null=True, max_length=200, verbose_name='姓名')
-    telephone = models.CharField(null=True, max_length=200, verbose_name='手机号码',
-                                 help_text='请输入 +08-XXXXXXXXXXX')
+    telephone = extend_model_fields.TelPhoneField(null=True, max_length=200, verbose_name='手机号码',
+                                                  help_text='请输入 XX-XXXXXXXXXXX')
     email_address = models.EmailField(verbose_name='邮箱地址')
     address = models.CharField(blank=True, max_length=200, verbose_name='家庭住址')
     birth = models.DateField(verbose_name='出生日期')
@@ -170,6 +318,7 @@ class Medicalor(models.Model):
     profile_picture = models.ImageField(blank=True, upload_to='medical/images/common_people/profile',
                                         default='medical/images/project/avatar01.jpeg')
     related_user = models.ForeignKey(to=User, null=True, on_delete=models.SET_NULL)
+    email = models.EmailField(blank=True)
 
     class Meta:
         abstract = True
@@ -187,6 +336,9 @@ class Doctor(Medicalor):
 
     def do_mail(self):
         pass
+
+    def __str__(self):
+        return self.name
 
 
 class Nurse(Medicalor):
@@ -223,8 +375,24 @@ class Volunteer(Supportor):
         (0, '无'),
         (1, '有')
     ], verbose_name='是否需要工资')
+    approved_status = models.IntegerField(blank=True, default=0, choices=[
+        (0, '未通过'),
+        (1, '审核中'),
+        (2, '审核通过'),
+    ])
     related_activity = models.ForeignKey(blank=False, to=COVIDActivity, on_delete=models.SET_NULL, null=True,
                                          verbose_name='报名参加的活动')
+
+    def send_approved_email(self):
+        body = '''Dear volunteer, You have success approved.'''
+        mail.send_mail(
+            'Dear volunteer, You have success approved.',
+            '',
+            '1134187280@qq.com',
+            recipient_list=[
+                self.email,
+            ],
+            html_message=body, )
 
 
 class CommonPeople(models.Model):

@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'medical.apps.MedicalConfig',
     'chat.apps.ChatConfig',
     'portal_auth.apps.PortalAuthConfig',
+    'base_admin.apps.BaseAdminConfig',
 ]
 
 MIDDLEWARE = [

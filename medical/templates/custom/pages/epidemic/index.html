@@ -1,32 +1,87 @@
 {% extends 'base/base.html' %}
-{% load static %}
+{% load static epidemic %}
 {% block medical_page_css %}
     <link rel="stylesheet" type="text/css" href="{% static "medical/css/page/custom-pages-epidemic-index.css" %}">
 {% endblock %}
 {% block content %}
     <div class="breadcrumb">
         <h1 class="main-title">
-            <span>四川疫情实时数据报告</span>
+            <span>疫情实时数据报告</span>
         </h1>
     </div>
-    <div class="epidemic-data">
-        <div class="virus-data">
-            <div class="content">
-                {% for virus_data_item in virus_data %}
-                    <div class="virus-data-item">
-                <span>
-                    {{ virus_data_item.label }}
-                </span>
-                        <p>
-                            {{ virus_data_item.data }}
-                        </p>
-                    </div>
+    {% if daily_data is not None %}
+        <div class="epidemic-data">
+            <span>今日COVID病毒数据</span>
+            <div class="virus-data">
+                <div class="content">
+                    {% for item in daily_data.items %}
+                        <div class="virus-data-item">
+                        <span>
+                            {{ item.label }}
+                        </span>
+                            <p>
+                                {{ item.data }}
+                            </p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="grow-chart">
+                {% for item in daily_data.charts %}
+                    {{ item|safe }}
                 {% endfor %}
             </div>
         </div>
-        <div class="grow-chart">
-            {{ bar_data|safe }}
-            {{ pie_data|safe }}
+    {% endif %}
+    {% week_data %}
+    {% if statics_data is not None %}
+        <div class="epidemic-data">
+            <span>{{ statics_data.description }}</span>
+            <div class="virus-data">
+                <div class="content">
+                    {% for item in statics_data.items %}
+                        <div class="virus-data-item">
+                        <span>
+                            {{ item.label }}
+                        </span>
+                            <p>
+                                {{ item.data }}
+                            </p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="grow-chart">
+                {% for item in statics_data.charts %}
+                    {{ item|safe }}
+                {% endfor %}
+            </div>
         </div>
-    </div>
+    {% endif %}
+    {% if period_data_list is not None %}
+        {% for statics_data in period_data_list %}
+            <div class="epidemic-data">
+                <span>{{ statics_data.description }}</span>
+                <div class="virus-data">
+                    <div class="content">
+                        {% for item in statics_data.items %}
+                            <div class="virus-data-item">
+                        <span>
+                            {{ item.label }}
+                        </span>
+                                <p>
+                                    {{ item.data }}
+                                </p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="grow-chart">
+                    {% for item in statics_data.charts %}
+                        {{ item|safe }}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
 {% endblock %}

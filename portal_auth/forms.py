@@ -19,7 +19,7 @@ class EmailLoginForm(forms.Form):
         if data is None:
             self.add_error('code', 'The code is expired.')
         else:
-            right_code = json.loads(data)['code']
+            right_code = str(json.loads(data)['code'])
             input_code = self.cleaned_data.get('code')
             if right_code != input_code:
                 self.add_error('code', 'The code is not correct.')

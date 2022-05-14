@@ -85,20 +85,21 @@ class SoloChatConsumer(ChatConsumerBase):
             message_type = 'outgoing'
         else:
             message_type = 'incoming'
-        # Save message to the db.
-        chat_content_collection = ChatContentCollection.objects.filter(related_chat_room_id=chat_room_id).first()
-        if chat_content_collection is None:
-            chat_content_collection = ChatContentCollection(related_chat_room=chat_room)
-            chat_content_collection.save()
-        message_entity = Message(content=message_data,
-                                 related_chat_content_collection=chat_content_collection,
-                                 publisher=sender_user,
-                                 publish_date_time=publish_date_time)
-        message_entity.save()
+        if message_type == 'outgoing':
+            # Save message to the db.
+            chat_content_collection = ChatContentCollection.objects.filter(related_chat_room_id=chat_room_id).first()
+            if chat_content_collection is None:
+                chat_content_collection = ChatContentCollection(related_chat_room=chat_room)
+                chat_content_collection.save()
+            message_entity = Message(content=message_data,
+                                     related_chat_content_collection=chat_content_collection,
+                                     publisher=sender_user,
+                                     publish_date_time=publish_date_time)
+            message_entity.save()
         # Send message to WebSocket
         data = {
             'user': {
-                'avatar_path': '/chat/images/img.png',
+                'avatar_path': '/avatar01.jpeg',
                 'name': sender_user.username,
             },
             'datetime': publish_date_time,

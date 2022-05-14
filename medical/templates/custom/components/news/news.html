@@ -1,0 +1,40 @@
+{% load static %}
+<div class="container">
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapse_{{ data_item.id }}" aria-expanded="false" aria-controls="collapseOne">
+                {{ data_item.title }}
+            </button>
+        </h2>
+        <div id="collapse_{{ data_item.id }}" class="accordion-collapse collapse"
+             data-bs-parent="#newsAccordion">
+            <div class="container mt-4">
+                <div class="row">
+                    <div class="col-1">
+                        <img src="{% get_media_prefix %}{{ data_item.image_url_path }}" width="100"
+                             class="img-thumbnail" alt="...">
+                    </div>
+                    <div class="col-8">
+                        <div class="row fw-bold">
+                            <div class="col">
+                                {{ data_item.title }}
+                            </div>
+                            <div class="col-md-auto">
+                            </div>
+                            <div class="col">
+                                {{ data_item.author }} {{ data_item.publish_date_time }}
+                            </div>
+                        </div>
+                        <div class="row fw-lighter">
+                            {{ data_item.content }}
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <button type="button" class="btn btn-info">详情</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

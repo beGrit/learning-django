@@ -2,13 +2,14 @@ import datetime
 
 from django import urls
 from django.db import transaction
-from django.http import HttpResponseRedirect, HttpRequest
+from django.http import HttpResponseRedirect, HttpRequest, Http404
+from django.shortcuts import render
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from pyecharts.charts import Bar, Pie
 
 from medical.forms import VaccinationSubscribeForm, VolunteerRegisterForm
-from medical.models import Vaccination, Volunteer
+from medical.models import Vaccination, Volunteer, News, DailyIncreaseVirusData, StaticsVirusData
 
 
 def home_page(request):
@@ -44,41 +45,14 @@ def home_page(request):
             'description': '查看疫苗接种活动',
         },
     ]
-    popularization_articles = [
-        {
-            'facade_image_url_path': '/media/medical/images/home-article/img_01.png',
-            'title': '四川省新型冠状病毒肺炎疫情最新情况（3月14日发布）',
-            'content': '截至3月13日24时，全省累计报告新型冠状病毒肺炎确诊病例1568例（其中境外输入940例），累计治愈出院1405例，死亡3例，目前在院隔离治疗160例，1784人尚在接受医学观察。',
-            'detail_url_path': '',
-        },
-        {
-            'facade_image_url_path': '/media/medical/images/home-article/img_1.png',
-            'title': '四川将全力推进国家中医药综合改革示范区和中医药强省建设',
-            'content': '四川新闻网-首屏新闻成都3月14日讯（记者 李丹）日前，2022年全省中医药工作暨中医药系统党风廉政建设工作电视电话会在成都召开。2021年，全省中医药系统开拓创新、担当作为，中医药事业产业文化“三位一体”高质量发展取得新成效，在疫情防控中彰显独特作用。2022年，全省中医药系统认真贯彻党中央、国务院和省委、省政府决策部署，坚持传承精华、守正创新，大力弘扬中医药文化，提升中医药服务能力，壮大中医药现代产业规模，加快推进中医药强省建设，更好造福全省人民。要坚持中西医并重，深化中医药改革，加强人才培养、科技创新和药品研发，全力推进国家中医药综合改革示范区建设，以优异成绩迎接党的二十大和省第十二次党代会胜利召开。',
-            'detail_url_path': '',
-        },
-        {
-            'facade_image_url_path': '',
-            'title': '四川:13条措施支持医疗健康装备产业发展,补助资金最高达5000万元',
-            'content': '''
-            四川在线记者 张彧希
-
-　　省政府办公厅近日印发《关于支持医疗健康装备产业高质量发展的若干政策措施》，13条措施聚焦核心技术攻关、创新平台建设、加大研发投入、创新成果转化、产业发展支持等方面，着力培育产业新动能，打造新优势。
-
-　　近年来，我国大力推进高端医疗装备进口替代和自主可控。四川省高度重视医药健康产业发展，将包括医疗健康装备产业在内的医药健康产业纳入“5+1”现代工业体系进行重点培育。新冠疫情发生后，医疗健康装备在打赢疫情防控阻击战中发挥了重要作用。“为抢抓医疗健康装备产业发展机遇，加快培育和招引生成一批具有引领示范意义的重大项目，加速产业延链强链和集聚发展，推动我省医疗健康装备产业实现新突破，出台支持医疗健康装备产业高质量发展的相关政策措施十分必要。”省经信厅相关负责人说，这是全国第一个省级层面关于医疗健康装备产业的政策措施。
-
-　　此次出台的《政策措施》，“创新驱动”特征明显。13条措施中，有6条在聚焦核心技术攻关、创新平台建设、提升临床研究能力、加大研发投入、智能装备开发和创新成果转化等。“在加强核心技术攻关上，提出了要聚焦医疗健康行业发展的重点和关键，以需‘定榜’。”省经信厅相关负责人解读。在创新平台建设和创新成果转化上，补助资金最高可达5000万元。
-
-　　《政策措施》还特别提到支持新业态新模式、支持企业登峰发展。新业态新模式包括企业牵头会同医疗健康机构投资建设的远程诊疗、智能诊断、数据中心等医疗健康装备集成创新服务平台等；支持企业登峰发展，一方面对国内外医疗健康装备标杆企业和头部企业来川设立地区总部、研发中心、生产基地等，纳入招引重点，加强地方配套支持；另一方面，对医疗健康装备“贡嘎培优”企业、“单项冠军”企业和专精特新“小巨人”企业，按有关规定给予奖补。''',
-            'detail_url_path': '',
-        },
-        {
-            'facade_image_url_path': '',
-            'title': '成都鼓励设立“首席健康官”！职场医疗再获官方助力',
-            'content': '近日，成都高新区印发《关于鼓励企业建立首席健康官制度的通知》，明确企业要发挥健康管理主体作用，企业可根据组织架构和工作实际需要，分层级设立首席健康官、健康管理专员。目前，富士康、腾讯、天府软件园、银泰城等10家企业、专业园区、商业商务楼宇已作为区内首批示范点位率先“试水”。',
-            'detail_url_path': '',
-        },
-    ]
+    news_arr = list(News.objects.all().order_by('-publish_date_time')[:5])
+    popularization_articles = []
+    for news in news_arr:
+        popularization_articles.append({
+            'facade_image_url_path': news.image_url_path,
+            'title': news.title,
+            'content': news.content,
+        })
     return TemplateResponse(request,
                             'custom/pages/home/home.html',
                             context={
@@ -90,75 +64,64 @@ def home_page(request):
 
 
 def epidemic(request):
-    virus_data = [
-        {
-            'label': '新增确诊',
-            'data': 4,
-        },
-        {
-            'label': '新增本土',
-            'data': 0,
-        },
-        {
-            'label': '新增境外',
-            'data': 4,
-        },
-        {
-            'label': '新增无症状',
-            'data': 9,
-        },
-        {
-            'label': '现存确诊',
-            'data': 152,
-        },
-        {
-            'label': '累计确诊',
-            'data': 1572,
-        },
-        {
-            'label': '累计治愈',
-            'data': 1417,
-        },
-        {
-            'label': '累计死亡',
-            'data': 3,
-        },
-    ]
-
-    x_axis = []
-    data_axis = []
-    for virus_item in virus_data:
-        x_axis.append(virus_item['label'])
-        data_axis.append(virus_item['data'])
-
-    # Build the bar chart.
-    bar = Bar(init_opts={
-        'width': '500px',
-        'height': '300px',
-    })
-    bar.add_xaxis(x_axis)
-    bar.add_yaxis("今日疫情走势", y_axis=data_axis, color='#FF6A57')
-    bar_data = bar.render_embed()
-
-    # Build the pie chart.
-    pie = Pie(init_opts={
-        'width': '500px',
-        'height': '600px',
-    })
-    pie_data_pair = []
-    for data_item in virus_data:
-        pie_data_pair.append([
-            data_item['label'],
-            data_item['data'],
-        ])
-    pie.add(series_name='', data_pair=pie_data_pair)
-    pie_data = pie.render_embed()
+    # Build daily data.
+    now = datetime.datetime.now()
+    today = now.day
+    daily_virus_entity = DailyIncreaseVirusData.objects.filter(date__day=today).first()
+    if daily_virus_entity is not None:
+        daily_items = daily_virus_entity.get_items()
+        daily_charts = []
+        bar_data = daily_virus_entity.render_as_bar()
+        pie_data = daily_virus_entity.render_as_pie()
+        daily_charts.append(bar_data)
+        daily_charts.append(pie_data)
+        daily_data = {
+            'items': daily_items,
+            'charts': daily_charts,
+        }
+    else:
+        daily_data = None
+    # Build statics data.
+    statics_virus_entity = StaticsVirusData.objects.filter(label='all').filter(type=0).first()
+    if statics_virus_entity is not None:
+        statics_items = statics_virus_entity.get_items()
+        statics_charts = []
+        bar_data = statics_virus_entity.render_as_bar()
+        pie_data = statics_virus_entity.render_as_pie()
+        statics_charts.append(bar_data)
+        statics_charts.append(pie_data)
+        statics_data = {
+            'description': statics_virus_entity.description,
+            'items': statics_items,
+            'charts': statics_charts,
+        }
+    else:
+        statics_data = None
+    # Build period statics data.
+    period_virus_entity = list(StaticsVirusData.objects.filter(publish_status=1).filter(type=1).all())
+    if len(period_virus_entity) != 0:
+        period_data_list = []
+        for statics_virus_entity in period_virus_entity:
+            statics_items = statics_virus_entity.get_items()
+            statics_charts = []
+            bar_data = statics_virus_entity.render_as_bar()
+            pie_data = statics_virus_entity.render_as_pie()
+            statics_charts.append(bar_data)
+            statics_charts.append(pie_data)
+            period_statics_data = {
+                'description': statics_virus_entity.description,
+                'items': statics_items,
+                'charts': statics_charts,
+            }
+            period_data_list.append(period_statics_data)
+    else:
+        period_data_list = None
     return TemplateResponse(request,
                             'custom/pages/epidemic/index.html',
                             context={
-                                'virus_data': virus_data,
-                                'bar_data': bar_data,
-                                'pie_data': pie_data,
+                                'daily_data': daily_data,
+                                'statics_data': statics_data,
+                                'period_data_list': period_data_list,
                             })
 
 
@@ -171,7 +134,7 @@ def activity_vaccination_subscribe(request):
                  ('星期五', 5),
                  ('星期六', 6),
                  ('星期日', 7)]
-    week_days = week_days[today.isoweekday():] + week_days[0:today.isoweekday()]
+    week_days = week_days[today.isoweekday() - 1:] + week_days[0:today.isoweekday() - 1]
 
     daily_vaccinations = []
     for index, week_day in enumerate(week_days):
@@ -292,7 +255,12 @@ def hospital_details(request, hospital_id):
 
 
 def news_list(request):
-    pass
+    news_arr = list(News.objects.all())
+    if len(news_arr) == 0:
+        raise Http404
+    return render(request, 'custom/pages/news/news_list.html', {
+        'data': news_arr,
+    })
 
 
 def volunteer_register_form(request: HttpRequest):

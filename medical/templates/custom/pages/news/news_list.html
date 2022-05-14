@@ -19,12 +19,13 @@
     <div class="container">
         <div class="breadcrumb">
             <h1 class="main-title">
-                <span>聊天频道</span>
+                <span>最新新闻</span>
             </h1>
         </div>
-        <div class="accordion" id="accordionExample">
-            {% include 'chat/components/message/channel/doctor_chat_cards.html' with doctors=doctors %}
-            {% include 'chat/components/message/channel/vaccination_chat_cards.html' with vaccinations=vaccinations %}
+        <div class="accordion" id="newsAccordion">
+            {% for data_item in data %}
+                {% include 'custom/components/news/news.html' with data_item=data_item %}
+            {% endfor %}
         </div>
     </div>
 {% endblock %}

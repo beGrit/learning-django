@@ -23,7 +23,7 @@ def message_detail(user_id, chat_room_id):
             message_type = 'incoming'
         data.append({
             'user': {
-                'avatar_path': '/chat/images/img.png',
+                'avatar_path': '/avatar01.jpeg',
                 'name': message.publisher.username,
             },
             'datetime': message.publish_date_time,
@@ -49,9 +49,9 @@ def message_queue(user_id, active_room_id=None):
             to_user = chat_room.subscribers.first()
         message_collection = chat_room.chatcontentcollection_set.first()
         if message_collection is not None:
-            first_message = message_collection.message_set.order_by('publish_date_time')[0].content
-            last_send_time = message_collection.message_set.order_by(Lower('publish_date_time').desc())[
-                0].publish_date_time
+            message_entity = message_collection.message_set.order_by('-publish_date_time').first()
+            first_message = message_entity.content
+            last_send_time = message_entity.publish_date_time
         else:
             first_message = ''
             last_send_time = chat_room.open_date_time
@@ -65,7 +65,7 @@ def message_queue(user_id, active_room_id=None):
                 },
                 'user_info':
                     {
-                        'avatar_path': '/chat/images/img.png',
+                        'avatar_path': '/avatar01.jpeg',
                         'name': to_user.username,
                     },
                 'message': first_message,

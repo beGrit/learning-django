@@ -8,10 +8,6 @@ from chat.models import ChatRoom, VaccinationChatRoom
 from medical.models import Doctor, Vaccination
 
 
-def index(request):
-    return render(request, 'chat/index.html')
-
-
 def room_advanced(request, chat_room_id):
     return render(request, 'chat/components/message/room/room-advanced.html', {
         'room_name': chat_room_id,
@@ -26,6 +22,7 @@ def available_chat_channels(request):
     return render(request, 'chat/components/message/channel/channels.html', {
         'doctors': doctors,
         'vaccinations': vaccinations,
+        'official_accounts': [],
     })
 
 

@@ -1,7 +1,8 @@
+{% load static %}
 <div class="article-card {{ grater_second_class }}">
     <div class="article-card-cover">
         {% if home_article.facade_image_url_path %}
-            <img src="{{ home_article.facade_image_url_path }}"
+            <img src="{% get_media_prefix %}{{ home_article.facade_image_url_path }}"
                  alt="cover" class="article-card-cover-img">
         {% else %}
             <img src="/media/medical/images/home-article/empty.png"

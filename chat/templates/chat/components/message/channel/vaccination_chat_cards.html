@@ -10,17 +10,21 @@
         <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
              data-bs-parent="#accordionExample">
             <div class="accordion-body">
-                {% for vaccination in vaccinations %}
-                    <div class="card" style="width: 18rem;">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ vaccination.title }}</h5>
-                            <p class="card-text">{{ vaccination.description }}</p>
-                            <button type="button" class="btn btn-success">
-                                <a href="{% url 'chat:chat-to-vaccination-group' vaccination.id %}">加入群组</a>
-                            </button>
-                        </div>
+                <div class="container">
+                    <div class="row row-cols-3">
+                        {% for vaccination in vaccinations %}
+                            <div class="card" style="width: 18rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ vaccination.title }}</h5>
+                                    <p class="card-text">{{ vaccination.description }}</p>
+                                    <button type="button" class="btn btn-outline-primary">
+                                        <a href="{% url 'chat:chat-to-vaccination-group' vaccination.id %}">加入群组</a>
+                                    </button>
+                                </div>
+                            </div>
+                        {% endfor %}
                     </div>
-                {% endfor %}
+                </div>
             </div>
         </div>
     </div>

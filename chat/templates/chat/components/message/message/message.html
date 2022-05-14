@@ -1,3 +1,4 @@
+{% load static %}
 {% if data.type == 'outgoing' %}
     <div class="outgoing_msg">
         <div class="sent_msg">
@@ -8,7 +9,7 @@
 {% elif data.type == 'incoming' %}
     <div class="incoming_msg">
         <div class="incoming_msg_img"><img
-                src="{{ data.user.avatar_path }}"
+                src="{% get_media_prefix %}{{ data.user.avatar_path }}"
                 alt="sunil"></div>
         <div class="received_msg">
             <div class="received_withd_msg">

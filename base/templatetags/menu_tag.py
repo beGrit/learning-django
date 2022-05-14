@@ -12,12 +12,8 @@ def menu_item_list():
                 'name': '首页',
             },
             {
-                'path': 'medical:home-page',
+                'path': 'medical:news-list',
                 'name': '资讯专栏',
-            },
-            {
-                'path': 'medical:home-page',
-                'name': '医疗数据专栏',
             },
             {
                 'path': 'medical:home-page',
