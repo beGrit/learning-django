@@ -1,0 +1,10 @@
+<img src="{{ src }}"
+        {% if type == 0 %}
+     width="200" height="200"
+        {% elif type == 1 %}
+     style="width: 100%; height: 100%;"
+        {% elif typ == 2 %}
+     width="400" height="400"
+        {% endif %}
+     class="{{ type }}"
+     alt="NOT FOUND">

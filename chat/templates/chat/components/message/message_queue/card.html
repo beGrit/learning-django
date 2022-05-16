@@ -1,6 +1,6 @@
 {% load static %}
 <a href="{% url 'chat:room-advanced' chat_room_id=card_data.chat_room_id %}">
-    <div class="chat_list {% if is_active %}active_chat{% endif %}">
+    <div class="chat_list {% if active_room_id == card_data.chat_room_id %}active_chat{% endif %}">
         <div class="chat_people">
             <div class="chat_img"><img src="{% get_media_prefix %}{{ card_data.user_info.avatar_path }}"
                                        alt="Not Found">

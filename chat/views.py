@@ -85,3 +85,11 @@ def chat_to_official_account(request, official_account_id):
             room.subscribers.set([request.user])
             room.save()
             return room_advanced(request, chat_room_id=room.id)
+
+
+def quit_chat_room(request):
+    pass
+
+
+def remove_chat_room(request):
+    pass

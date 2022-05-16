@@ -1,6 +1,5 @@
 from django import template
 from django.contrib.auth.models import User
-from django.db.models.functions import Lower
 
 from chat.models import ChatRoom, ChatContentCollection
 
@@ -73,5 +72,6 @@ def message_queue(user_id, active_room_id=None):
         )
     data.sort(key=lambda x: (x['meta_info']['last_send_time']), reverse=True)
     return {
+        'active_room_id': active_room_id,
         'data': data,
     }

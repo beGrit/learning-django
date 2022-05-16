@@ -1,0 +1,38 @@
+<!------ Include the above in your HEAD tag ---------->
+<!-- chat/templates/chat/room.html -->
+{% extends 'base/base.html' %}
+{% load static message empty view model %}
+{% block content %}
+    <div class="container">
+        <div class="breadcrumb">
+            <h1 class="main-title">
+                <span>{{ view.get_breadcrumb_name|upper }}</span>
+            </h1>
+        </div>
+        {% if object_list is None %}
+            {% show_empty %}
+        {% else %}
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    {% for header in view.get_headers %}
+                        <th scope="col">{{ header }}</th>
+                    {% endfor %}
+                </tr>
+                </thead>
+                <tbody>
+                {% for object in object_list %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        {% for field_name in view.get_body_fields_name %}
+                            <td>{{ object|value_from_model:field_name }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+        {% pagination page_obj %}
+    </div>
+{% endblock %}

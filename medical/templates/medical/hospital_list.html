@@ -1,0 +1,37 @@
+<!------ Include the above in your HEAD tag ---------->
+<!-- chat/templates/chat/room.html -->
+{% extends 'base/base.html' %}
+{% load static message empty view model html %}
+{% block content %}
+    <div class="breadcrumb">
+        <h1 class="main-title">
+            <span>医院列表</span>
+        </h1>
+    </div>
+    <div class="shadow container rounded rounded-3 bg-white p-3">
+        {% if object_list.count != 0 %}
+            {% for object in object_list %}
+                <div class="row w-100 p-3 m-0 border-bottom border-1 border-primary">
+                    <div class="col-1">
+                        {% if object.profile_photo %}
+                            {% image_node src=object.profile_photo.url type=1 %}
+                        {% else %}
+                            {% show_img_placeholder %}
+                        {% endif %}
+                    </div>
+                    <div class="col-8">
+                        <div class="row text-primary mb-3">{{ object.code }} - {{ object.name }}</div>
+                        <div class="row text-body">{{ object.related_region }}</div>
+                    </div>
+                    <div class="col-1"></div>
+                    <div class="col-1">
+                        <a class="link-danger" href="{% url view.get_detail_route object.id %}">详情</a>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            {% show_empty %}
+        {% endif %}
+        {% pagination page_obj %}
+    </div>
+{% endblock %}

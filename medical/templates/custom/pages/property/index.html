@@ -1,0 +1,51 @@
+<!------ Include the above in your HEAD tag ---------->
+<!-- chat/templates/chat/room.html -->
+{% extends 'base/base.html' %}
+{% load static message empty %}
+{% block medical_page_css %}
+    <link href="{% static 'chat/css/bootstrap.min.css' %}" type="text/css"
+          rel="stylesheet">
+    <link href="{% static 'chat/css/font-awesome.css' %}" type="text/css"
+          rel="stylesheet">
+    <link href="{% static 'chat/css/room-advanced.css' %}" type="text/css"
+          rel="stylesheet">
+{% endblock %}
+{% block medical_page_js %}
+    <script src="{% static 'chat/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'chat/js/jquery.min.js' %}"></script>
+    <script src="{% static 'chat/js/room_advanced.js' %}"></script>
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="breadcrumb">
+            <h1 class="main-title">
+                <span>物资专栏</span>
+            </h1>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row justify-content-around">
+            <div class="card w-25">
+                <div class="card-body">
+                    <h5 class="card-title">药物</h5>
+                    <p class="card-text">查看药物相关资源.</p>
+                    <a href="{% url 'medical:drug-list' %}" class="btn btn-primary">去看看</a>
+                </div>
+            </div>
+            <div class="card w-25">
+                <div class="card-body">
+                    <h5 class="card-title">装备</h5>
+                    <p class="card-text">查看装备相关资源.</p>
+                    <a href="{% url 'medical:equipment-list' %}" class="btn btn-primary">去看看</a>
+                </div>
+            </div>
+            <div class="card w-25">
+                <div class="card-body">
+                    <h5 class="card-title">疫苗</h5>
+                    <p class="card-text">查看疫苗相关资源.</p>
+                    <a href="{% url 'medical:vaccine-list' %}" class="btn btn-primary">去看看</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

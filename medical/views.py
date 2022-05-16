@@ -2,30 +2,32 @@ import datetime
 
 from django import urls
 from django.db import transaction
-from django.http import HttpResponseRedirect, HttpRequest, Http404
+from django.http import HttpResponseRedirect, HttpRequest
 from django.shortcuts import render
 from django.template.response import TemplateResponse
 from django.urls import reverse
-from pyecharts.charts import Bar, Pie
+from django.views.generic import ListView, DetailView
 
+from base.views import CommonTableListView
 from medical.forms import VaccinationSubscribeForm, VolunteerRegisterForm
-from medical.models import Vaccination, Volunteer, News, DailyIncreaseVirusData, StaticsVirusData
+from medical.models import Vaccination, Volunteer, News, DailyIncreaseVirusData, StaticsVirusData, Drug, Equipment, \
+    Hospital, Vaccine
 
 
 def home_page(request):
     home_banner_items = [
         {
-            'details_url_path': '',
+            'details_url_path': reverse('medical:vaccine-list'),
             'title': '查疫苗',
             'description': '快来看看最新的疫苗',
         },
         {
-            'details_url_path': '',
+            'details_url_path': reverse('medical:drug-list'),
             'title': '查药品',
             'description': '不知道吃啥药？快来看看药品信息大全',
         },
         {
-            'details_url_path': '',
+            'details_url_path': reverse('medical:equipment-list'),
             'title': '查器材',
             'description': '看看有哪些有用的器材',
         },
@@ -60,71 +62,14 @@ def home_page(request):
                             'custom/pages/home/home.html',
                             context={
                                 'home_banner_items': home_banner_items,
-                                'home_article': {
-                                    'popularization_articles': popularization_articles
-                                },
+                                'popularization_articles': popularization_articles
                             })
 
 
 def epidemic(request):
-    # Build daily data.
-    now = datetime.datetime.now()
-    today = now.day
-    daily_virus_entity = DailyIncreaseVirusData.objects.filter(date__day=today).first()
-    if daily_virus_entity is not None:
-        daily_items = daily_virus_entity.get_items()
-        daily_charts = []
-        bar_data = daily_virus_entity.render_as_bar()
-        pie_data = daily_virus_entity.render_as_pie()
-        daily_charts.append(bar_data)
-        daily_charts.append(pie_data)
-        daily_data = {
-            'items': daily_items,
-            'charts': daily_charts,
-        }
-    else:
-        daily_data = None
-    # Build statics data.
-    statics_virus_entity = StaticsVirusData.objects.filter(label='all').filter(type=0).first()
-    if statics_virus_entity is not None:
-        statics_items = statics_virus_entity.get_items()
-        statics_charts = []
-        bar_data = statics_virus_entity.render_as_bar()
-        pie_data = statics_virus_entity.render_as_pie()
-        statics_charts.append(bar_data)
-        statics_charts.append(pie_data)
-        statics_data = {
-            'description': statics_virus_entity.description,
-            'items': statics_items,
-            'charts': statics_charts,
-        }
-    else:
-        statics_data = None
-    # Build period statics data.
-    period_virus_entity = list(StaticsVirusData.objects.filter(publish_status=1).filter(type=1).all())
-    if len(period_virus_entity) != 0:
-        period_data_list = []
-        for statics_virus_entity in period_virus_entity:
-            statics_items = statics_virus_entity.get_items()
-            statics_charts = []
-            bar_data = statics_virus_entity.render_as_bar()
-            pie_data = statics_virus_entity.render_as_pie()
-            statics_charts.append(bar_data)
-            statics_charts.append(pie_data)
-            period_statics_data = {
-                'description': statics_virus_entity.description,
-                'items': statics_items,
-                'charts': statics_charts,
-            }
-            period_data_list.append(period_statics_data)
-    else:
-        period_data_list = None
     return TemplateResponse(request,
                             'custom/pages/epidemic/index.html',
                             context={
-                                'daily_data': daily_data,
-                                'statics_data': statics_data,
-                                'period_data_list': period_data_list,
                             })
 
 
@@ -282,3 +227,61 @@ def volunteer_register_form(request: HttpRequest):
     return TemplateResponse(request, 'custom/pages/volunteer/register_form.html', {
         'form': form
     })
+
+
+def property_list(request):
+    return render(request, 'custom/pages/property/index.html')
+
+
+class DrugListView(CommonTableListView):
+    model = Drug
+    paginate_by = 5
+
+    def get_headers(self):
+        return ['编码', '药物名', '价格', '上架时间']
+
+    def get_body_fields_name(self):
+        return ['code', 'name', 'price', 'produced_date_time']
+
+    def get_breadcrumb_name(self):
+        return self.model._meta.model_name
+
+
+class EquipmentListView(CommonTableListView):
+    model = Equipment
+    paginate_by = 5
+
+    def get_headers(self):
+        return ['编码', '装备名', '价格', '上架时间']
+
+    def get_body_fields_name(self):
+        return ['code', 'name', 'price', 'produced_date_time']
+
+    def get_breadcrumb_name(self):
+        return self.model._meta.model_name
+
+
+class HospitalListView(ListView):
+    model = Hospital
+    paginate_by = 5
+
+    def get_detail_route(self):
+        return 'medical:hospital-detail'
+
+
+class HospitalDetailView(DetailView):
+    model = Hospital
+
+
+class VaccineListView(CommonTableListView):
+    model = Vaccine
+    paginate_by = 3
+
+    def get_headers(self):
+        return ['疫苗名', '简介 ']
+
+    def get_body_fields_name(self):
+        return ['name', 'description']
+
+    def get_breadcrumb_name(self):
+        return self.model._meta.model_name

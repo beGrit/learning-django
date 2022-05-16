@@ -10,15 +10,15 @@
     <link rel="stylesheet" type="text/css" href="{% static "admin/css/widgets.css" %}">
     <link rel="stylesheet" type="text/css" href="{% static "medical/css/library/common.css" %}">
     <link rel="stylesheet" type="text/css" href="{% static "medical/css/components/menu.css" %}">
-    <link href="{% static 'chat/css/bootstrap.min.css' %}" type="text/css"
-          rel="stylesheet">
-    <link href="{% static 'chat/css/font-awesome.css' %}" type="text/css"
-          rel="stylesheet">
-    <script src="{% static 'chat/js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'chat/js/jquery.min.js' %}"></script>
     {% bootstrap_css %}
-    <script type="application/javascript" src="{% static "medical/js/base.js" %}"></script>
     {% bootstrap_javascript %}
+    <link href="{% static 'base/css/bootstrap.min.css' %}" type="text/css"
+          rel="stylesheet">
+    <link href="{% static 'base/css/font-awesome.css' %}" type="text/css"
+          rel="stylesheet">
+    <script src="{% static 'base/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'base/js/jquery.min.js' %}"></script>
+    <script type="application/javascript" src="{% static "medical/js/base.js" %}"></script>
     {% block medical_page_css %}
     {% endblock %}
     {% block medical_page_js %}
@@ -29,7 +29,7 @@
 <div id="container">
     <div id="header">
         <div id="branding">
-            <h1 id="site-name"><a href="/medical/">医疗系统 Medical System</a></h1>
+            <h1 id="site-name"><a href="/medical/">医疗系统</a></h1>
         </div>
         <div id="user-tools">
             {% if user.is_authenticated %}

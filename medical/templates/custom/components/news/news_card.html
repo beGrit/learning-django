@@ -1,0 +1,10 @@
+{% if data is not None %}
+    <div class="container mb-2">
+        <div class="card w-200">
+            <div class="card-body">
+                <h5 class="card-title text-info">{{ data.title }}</h5>
+                <p class="card-text">{{ data.content }}</p>
+            </div>
+        </div>
+    </div>
+{% endif %}

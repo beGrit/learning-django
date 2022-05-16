@@ -16,7 +16,7 @@ def menu_item_list():
                 'name': '资讯专栏',
             },
             {
-                'path': 'medical:home-page',
+                'path': 'medical:property-list',
                 'name': '物资专栏',
             },
             {

@@ -23,6 +23,18 @@ urlpatterns = [
          name='volunteer-register-form'),
     path('custom/news/list', medical.views.news_list,
          name='news-list'),
+    path('custom/property', medical.views.property_list,
+         name='property-list'),
+    path('custom/drugs', medical.views.DrugListView.as_view(),
+         name='drug-list'),
+    path('custom/equipments', medical.views.EquipmentListView.as_view(),
+         name='equipment-list'),
+    path('custom/hospitals', medical.views.HospitalListView.as_view(),
+         name='hospital-list'),
+    path('custom/hospital/<int:id>/', medical.views.HospitalDetailView.as_view(),
+         name='hospital-detail'),
+    path('custom/vaccines', medical.views.VaccineListView.as_view(),
+         name='vaccine-list'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

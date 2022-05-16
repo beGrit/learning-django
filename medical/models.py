@@ -56,6 +56,7 @@ class Region(models.Model):
 
 
 class Hospital(models.Model):
+    profile_photo = models.ImageField(blank=True, upload_to='medical/images/hospital/profile_photo')
     code = models.CharField(blank=False, unique=True, help_text='The code for hospital.', max_length=200)
     name = models.CharField(blank=False, help_text='The name for hospital.', max_length=200)
     description = models.TextField(blank=True, help_text='The description for hospital.')
