@@ -46,4 +46,28 @@ window.onload = function (e) {
         // Send success, reset the input value.
         message_input_elm.value = ''
     };
+
+    const delete_btn = document.querySelector('.delete-button')
+    delete_btn.addEventListener('click', (e) => {
+        const check_arr = document.querySelectorAll('.message-checkbox')
+        let chat_room_id_arr = []
+        if (check_arr.length !== 0) {
+            for (let item of check_arr) {
+                if (item.checked) {
+                    chat_room_id_arr.push(item.value)
+                }
+            }
+            fetch('/chat/quit_chat_room_batch/', {
+                method: 'POST',
+                body: JSON.stringify({'chat_room_id_arr': [chat_room_id_arr]}),
+                headers: {
+                    'user-agent': 'Mozilla/4.0 MDN Example',
+                    'content-type': 'application/json'
+                },
+            }).then(response => {
+                if (response.status === 200) {
+                }
+            })
+        }
+    })
 }

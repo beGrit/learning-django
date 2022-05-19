@@ -1,5 +1,6 @@
 from django import template
 from django.contrib.auth.models import User
+from chat.util import get_avatar
 
 from chat.models import ChatRoom, ChatContentCollection
 
@@ -10,27 +11,28 @@ register = template.Library()
 def message_detail(user_id, chat_room_id):
     user = User.objects.get(id=user_id)
     chat_room = ChatRoom.objects.filter(subscribers__in=[user]).filter(id=chat_room_id).first()
-    chat_collection: ChatContentCollection = chat_room.chatcontentcollection_set.first()
-    messages = []
     data = []
-    if chat_collection is not None:
-        messages = chat_collection.message_set.all()
-    for message in messages:
-        if message.publisher_id == user_id:
-            message_type = 'outgoing'
-        else:
-            message_type = 'incoming'
-        data.append({
-            'user': {
-                'avatar_path': '/avatar01.jpeg',
-                'name': message.publisher.username,
-            },
-            'datetime': message.publish_date_time,
-            'msg_data': {
-                'data': message.content
-            },
-            'type': message_type,
-        })
+    if chat_room is not None:
+        chat_collection: ChatContentCollection = chat_room.chatcontentcollection_set.first()
+        messages = []
+        if chat_collection is not None:
+            messages = chat_collection.message_set.all()
+        for message in messages:
+            if message.publisher_id == user_id:
+                message_type = 'outgoing'
+            else:
+                message_type = 'incoming'
+            data.append({
+                'user': {
+                    'avatar_path': get_avatar(message.publisher.id),
+                    'name': message.publisher.username,
+                },
+                'datetime': message.publish_date_time,
+                'msg_data': {
+                    'data': message.content
+                },
+                'type': message_type,
+            })
     return {
         'data_list': data,
     }
@@ -42,7 +44,7 @@ def message_queue(user_id, active_room_id=None):
     chat_rooms = list(user.chatroom_set.all())
     data = []
     for chat_room in chat_rooms:
-        if chat_room.type == 3:
+        if chat_room.type == 3 or chat_room.type == 1:
             to_user = chat_room.subscribers.exclude(id=user_id).first()
         else:
             to_user = chat_room.subscribers.first()
@@ -64,7 +66,7 @@ def message_queue(user_id, active_room_id=None):
                 },
                 'user_info':
                     {
-                        'avatar_path': '/avatar01.jpeg',
+                        'avatar_path': get_avatar(to_user.id),
                         'name': to_user.username,
                     },
                 'message': first_message,

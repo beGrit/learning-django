@@ -19,6 +19,9 @@
                         <div class="recent_heading">
                             <h4>消息列表</h4>
                         </div>
+                        <div class="delete-button">
+                            <button>DELETE</button>
+                        </div>
                     </div>
                     <div class="inbox_chat">
                         {% message_queue user_id=request.user.id active_room_id=chat_room_id %}

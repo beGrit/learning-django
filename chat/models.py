@@ -46,7 +46,7 @@ class GroupChatRoom(ChatRoom):
 
 
 class OfficialChatRoom(ChatRoom):
-    related_official_account = models.OneToOneField(to=OfficialAccount, on_delete=models.CASCADE)
+    related_official_account = models.ForeignKey(to=OfficialAccount, on_delete=models.CASCADE)
 
 
 class VaccinationChatRoom(ChatRoom):

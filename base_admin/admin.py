@@ -266,7 +266,7 @@ class AutoReplyAdmin(BaseAdmin):
 
 
 models = apps.get_models()
-supported_app = ['admin', 'auth']
+supported_app = ['admin', 'auth', 'chat', 'medical',]
 for model in models:
     if not admin.site.is_registered(model) and model._meta.app_label in supported_app:
         admin.site.register(model)

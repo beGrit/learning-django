@@ -15,9 +15,11 @@ window.addEventListener('load', function () {
         })
     }
 
-    const subscribe_btn = document.querySelector('.subscribe-btn')
-    subscribe_btn.addEventListener('click', () => {
-        let url = subscribe_btn.getAttribute('value')
-        window.open(url)
-    })
+    const subscribe_btn_arr = document.querySelectorAll('.subscribe-btn')
+    for (let subscribe_btn of subscribe_btn_arr) {
+        subscribe_btn.addEventListener('click', () => {
+            let url = subscribe_btn.getAttribute('value')
+            window.open(url)
+        })
+    }
 })

@@ -10,7 +10,7 @@ from django.views.generic import ListView, DetailView
 
 from base.views import CommonTableListView
 from medical.forms import VaccinationSubscribeForm, VolunteerRegisterForm
-from medical.models import Vaccination, Volunteer, News, DailyIncreaseVirusData, StaticsVirusData, Drug, Equipment, \
+from medical.models import Vaccination, Volunteer, News, Drug, Equipment, \
     Hospital, Vaccine
 
 
@@ -35,16 +35,6 @@ def home_page(request):
             'details_url_path': reverse('medical:hospital-list'),
             'title': '查医院',
             'description': '看看附近有哪些医院？',
-        },
-        {
-            'details_url_path': reverse('medical:hospital-index'),
-            'title': '查医生',
-            'description': '看看有哪些医生',
-        },
-        {
-            'details_url_path': reverse('medical:activity-vaccination-subscribe'),
-            'title': '查看疫苗接种活动',
-            'description': '查看疫苗接种活动',
         },
     ]
     news_arr = list(News.objects.all().order_by('-publish_date_time')[:5])
