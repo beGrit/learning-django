@@ -1,8 +1,11 @@
 import datetime
 
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.template import loader, Template
+from django.urls import reverse
 from django.utils import timezone
 from django.core import mail
 from pyecharts.charts import Bar, Pie
@@ -61,6 +64,14 @@ class Hospital(models.Model):
     name = models.CharField(blank=False, help_text='The name for hospital.', max_length=200)
     description = models.TextField(blank=True, help_text='The description for hospital.')
     related_region = models.OneToOneField(blank=False, to=Region, on_delete=models.CASCADE)
+    level_name = models.IntegerField(
+        blank=True,
+        choices=[
+            (0, '甲等'),
+            (1, '乙等'),
+            (2, '丙等'),
+        ],
+        default=1)
 
     def __str__(self):
         return self.name
@@ -390,19 +401,29 @@ class Volunteer(Supportor):
         (1, '审核中'),
         (2, '审核通过'),
     ])
-    related_activity = models.ForeignKey(blank=False, to=COVIDActivity, on_delete=models.SET_NULL, null=True,
+    related_activity = models.ForeignKey(blank=False, to=Vaccination, on_delete=models.SET_NULL, null=True,
                                          verbose_name='报名参加的活动')
 
     def send_approved_email(self):
-        body = '''Dear volunteer, You have success approved.'''
+        template: Template = loader.get_template('custom/emails/vaccination_approved.html')
+        body_data = template.render(context={
+            'data': {
+                'name': self.name,
+                'related_activity': self.related_activity,
+                'chat_room_route': settings.BASE_URL + reverse('chat:chat-to-vaccination-group',
+                                                               kwargs={
+                                                                   'group_id': self.related_activity.id
+                                                               }),
+            }
+        })
         mail.send_mail(
-            'Dear volunteer, You have success approved.',
+            '志愿者申请审核通过.',
             '',
             '1134187280@qq.com',
             recipient_list=[
                 self.email,
             ],
-            html_message=body, )
+            html_message=body_data, )
 
 
 class CommonPeople(models.Model):
@@ -418,7 +439,8 @@ class CommonPeople(models.Model):
         abstract = True
 
 
-class Visitor(CommonPeople):
+class Visitor(models.Model):
+    ip_address = models.CharField(blank=False, null=True, max_length=100)
     last_visit_site_time = models.DateTimeField(blank=False, null=True, default=datetime.datetime.now())
     visit_times = models.PositiveIntegerField(blank=False, null=True, default=0)
 
@@ -437,3 +459,8 @@ class News(models.Model):
     content = models.TextField(blank=True, max_length=200)
     author = models.ForeignKey(User, blank=True, on_delete=models.CASCADE)
     publish_date_time = models.DateTimeField()
+
+    def get_detail_route_path(self):
+        return reverse('medical:news-detail', kwargs={
+            'pk': self.pk,
+        })

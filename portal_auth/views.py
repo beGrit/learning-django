@@ -126,3 +126,9 @@ def login_page(request):
                     'form': form,
                     'login_type': login_type,
                 })
+
+
+def register(request):
+    user = User({
+
+    })

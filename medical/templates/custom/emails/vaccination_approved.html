@@ -1,0 +1,101 @@
+<meta charset="UTF-8">
+<html>
+<head>
+    <title></title>
+    <style type="text/css">* {
+        margin: 0;
+        padding: 0;
+    }
+    </style>
+</head>
+<body>
+<div class="wp"
+     style="background-color: #f7f5f2; margin: 0; padding-top: 0; padding-bottom: 30px; padding-left: 0; padding-right: 0; font-family:'Helvetica Neue', sans-serif;">
+    <table border="0" cellpadding="0" cellspacing="0" style="margin: 0 auto;" width="600">
+        <tbody>
+        <tr>
+            <td height="65">&nbsp;</td>
+        </tr>
+        <tr>
+            <td height="50">&nbsp;</td>
+        </tr>
+        <tr>
+            <td style="box-shadow: 0 0 5px rgba(0,0,0,.25);">
+                <table border="0" cellpadding="0" cellspacing="0" style="background-color: #fff;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td height="5">
+                            <div style="background-color: #be1e74; height:1px; border-bottom: 4px solid #be1e74;">
+                                &nbsp;
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="padding-top: 35px; padding-right: 39px; padding-left: 39px; padding-bottom: 30px;">
+                                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                    <tbody>
+                                    <tr>
+                                        <td>
+                                            <h1 style="margin: 0;font-size: 24px; color: #004d6c; text-align: left;">
+                                                亲爱的 {{ data.name }},</h1>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td height="26">&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p style="margin: 0; font-size: 16px; color: #000; line-height: 24px;">
+                                                您的志愿者申请已通过，请查看下列信息。</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td height="26">&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div style="border-left: 5px solid #ccc; padding-left: 10px;">
+                                                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <p style="margin: 0; font-size: 18px; color: #004d6c; line-height: 24px;">
+                                                                通知
+                                                            </p>
+                                                            <p style="margin: 0; font-size: 16px; line-height: 24px;">
+                                                                您需要于 {{ data.related_activity.process_date_time }} 到达 {{ data.related_activity.full_area }}。<br>
+                                                                点击<a href="{{ data.chat_room_route }}">这里</a>加入活动关联群组。
+                                                            </p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td height="26">&nbsp;</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td height="16">&nbsp;</td>
+        </tr>
+        <tr>
+            <td>
+                <p style="margin: 0; color:#000;font-size:14px">邮件自动发送的，请不要回复此邮件。</p>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,50 @@
+{% extends 'base/base.html' %}
+{% load static empty model html %}
+{% block medical_page_css %}
+    <link rel="stylesheet" type="text/css" href="{% static "medical/css/page/custom-pages-hospital-details.css" %}">
+{% endblock %}
+{% block medical_page_js %}
+{% endblock %}
+{% block content %}
+    <div class="breadcrumb">
+        <h1 class="main-title">
+            <span>医院详情</span>
+        </h1>
+    </div>
+    <div class="hospital-details">
+        <div class="hospital-details-container">
+            <div class="basic-info part-root">
+                <h2 class="h2-color">新闻</h2>
+                <div class="content">
+                    <div class="content-left">
+                        {% if object.image_url_path %}
+                            {% image_node src=object.image_url_path.url type=1 %}
+                        {% else %}
+                            {% show_img_placeholder %}
+                        {% endif %}
+                    </div>
+                    <div class="content-right">
+                        <div class="content-right-title">
+                            <div class="content-right-name">
+                                <h3>{{ object.title }}</h3>
+                            </div>
+                            {% if object.author is not None %}
+                                <div class="content-right-level_name">
+                                    <span>{{ object.author.username }}</span>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="description-info part-root">
+                <h2 class="h2-color">新闻内容</h2>
+                <div class="description-content-container">
+                    <article class="description-content text-over-hidden">
+                        {{ object.content }}
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,3 +1,4 @@
+import datetime
 import uuid
 
 from django.apps import apps
@@ -5,7 +6,8 @@ from django.contrib import admin, messages
 from django.contrib.contenttypes.models import ContentType
 from django.http import HttpResponseRedirect
 
-from chat.models import ChatRoom, Message, OfficialAccount, AutoReply
+from chat.models import ChatRoom, Message, OfficialAccount, AutoReply, VaccinationChatRoom, OfficialChatRoom, \
+    MarkedWords
 from medical.models import Drug, News, Doctor, Hospital, Vaccination, Equipment, Nurse, Patient, Vaccine, Volunteer, \
     Staff, DailyIncreaseVirusData, StaticsVirusData, VaccinationSubscribe
 
@@ -137,7 +139,24 @@ class VaccinationAdmin(BaseAdmin):
 
     @admin.action(description='Create chat room.')
     def create_chat_room(self, request, queryset):
-        pass
+        vaccinations = list(queryset)
+        count = 0
+        for vaccination in vaccinations:
+            vaccination_chat_room = VaccinationChatRoom.objects.filter(related_activity_id=vaccination.id).first()
+            if vaccination_chat_room is None:
+                vaccination_chat_room = VaccinationChatRoom(title=vaccination.title,
+                                                            type=2,
+                                                            open_date_time=datetime.datetime.now(),
+                                                            related_activity=vaccination)
+                vaccination_chat_room.save()
+                self.message_user(request, [
+                    '%s chat room created.' % vaccination.title
+                ], level=messages.INFO)
+                count += 1
+            else:
+                self.message_user(request, [
+                    'The chat room has created in past: .' + vaccination.title
+                ], level=messages.ERROR)
 
 
 @admin.register(VaccinationSubscribe)
@@ -191,6 +210,37 @@ class StaticsVirusDataAdmin(BaseAdmin):
 # Chat admin.
 @admin.register(ChatRoom)
 class ChatRoomAdmin(BaseAdmin):
+    actions = ['dismiss_chat_room']
+
+    def get_list_display(self, request):
+        return ['title', 'type', 'open_date_time']
+
+    @admin.action(description='Dismiss chat room')
+    def dismiss_chat_room(self, request, queryset):
+        # update_count = queryset.update(publish_status=0)
+        chat_rooms = list(queryset)
+        count = 0
+        for chat_room in chat_rooms:
+            if chat_room.type == 2 or chat_room.type == 3:
+                chat_room.delete()
+                count += 1
+            else:
+                self.message_user(request, [
+                    'The chat room is official account, cannot dismiss: .' + chat_room.title
+                ], level=messages.ERROR)
+        self.message_user(request, [
+            '%d chat room are dismissed.' % count
+        ], level=messages.INFO)
+
+
+@admin.register(OfficialChatRoom)
+class OfficialChatRoomAdmin(BaseAdmin):
+    def get_list_display(self, request):
+        return ['title', 'type', 'open_date_time']
+
+
+@admin.register(VaccinationChatRoom)
+class VaccinationChatRoomAdmin(BaseAdmin):
     def get_list_display(self, request):
         return ['title', 'type', 'open_date_time']
 
@@ -198,6 +248,11 @@ class ChatRoomAdmin(BaseAdmin):
 @admin.register(Message)
 class MessageAdmin(BaseAdmin):
     list_display = ['publisher', 'publish_date_time']
+
+
+@admin.register(MarkedWords)
+class MarkedWordsAdmin(BaseAdmin):
+    list_display = ['content', 'publisher', 'publish_date_time']
 
 
 @admin.register(OfficialAccount)
@@ -211,7 +266,7 @@ class AutoReplyAdmin(BaseAdmin):
 
 
 models = apps.get_models()
-
+supported_app = ['admin', 'auth']
 for model in models:
-    if not admin.site.is_registered(model):
+    if not admin.site.is_registered(model) and model._meta.app_label in supported_app:
         admin.site.register(model)

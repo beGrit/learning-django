@@ -1,0 +1,68 @@
+{% extends 'base/base.html' %}
+{% load static empty model html %}
+{% block medical_page_css %}
+    <link rel="stylesheet" type="text/css" href="{% static "medical/css/page/custom-pages-hospital-details.css" %}">
+{% endblock %}
+{% block medical_page_js %}
+{% endblock %}
+{% block content %}
+    <div class="breadcrumb">
+        <h1 class="main-title">
+            <span>医院详情</span>
+        </h1>
+    </div>
+    <div class="hospital-details">
+        <div class="hospital-details-container">
+            <div class="basic-info part-root">
+                <h2 class="h2-color">医院基本信息</h2>
+                <div class="content">
+                    <div class="content-left">
+                        {% if object.profile_photo %}
+                            {% image_node src=object.profile_photo.url type=1 %}
+                        {% else %}
+                            {% show_img_placeholder %}
+                        {% endif %}
+                    </div>
+                    <div class="content-right">
+                        <div class="content-right-title">
+                            <div class="content-right-name">
+                                <a href="{{ hospital.details_url }}">
+                                    <h3>{{ object.name }}</h3>
+                                </a>
+                            </div>
+                            {% if object.level_name is not None %}
+                                <div class="content-right-level_name">
+                                    <span>{{ object.get_level_name_display }}</span>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="description-info part-root">
+                <h2 class="h2-color">医院简介</h2>
+                <div class="description-content-container">
+                    <article class="description-content text-over-hidden">
+                        {{ object.description }}
+                    </article>
+                </div>
+            </div>
+            <div class="activity-list part-root">
+                <h2 class="h2-color">基本活动</h2>
+                <div class="activity-list-content">
+                    {% if actions is None or actions.len == 0 %}
+                        {% show_empty %}
+                    {% else %}
+                        {% for action in actions %}
+                            <div class="activity-list-content-item">
+                                <button>
+                                    <a href="{{ action.action_route }}">{{ action.name }}</a>
+                                </button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

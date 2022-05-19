@@ -170,3 +170,6 @@ OPEN_URLS = [
         ]
     }
 ]
+
+# Site settings.
+BASE_URL = 'http://127.0.0.1:9000'

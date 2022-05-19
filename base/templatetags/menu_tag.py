@@ -13,6 +13,10 @@ def menu_item_list():
             },
             {
                 'path': 'medical:news-list',
+                'name': '本站医疗基础数据概揽',
+            },
+            {
+                'path': 'medical:news-list',
                 'name': '资讯专栏',
             },
             {

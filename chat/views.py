@@ -8,22 +8,25 @@ from chat.models import ChatRoom, VaccinationChatRoom, OfficialAccount, Official
 from medical.models import Doctor, Vaccination
 
 
-def room_advanced(request, chat_room_id):
-    room = ChatRoom.objects.get(id=chat_room_id)
-    room_type = ''
-    if room is not None:
-        if room.type == 1:
-            room_type = 'official_account'
-        elif room.type == 2:
-            room_type = 'group'
-        elif room.type == 3:
-            room_type = 'solo'
-    return render(request, 'chat/components/message/room/room-advanced.html', {
-        'room_name': chat_room_id,
-        'chat_room_id': chat_room_id,
-        'user_id': request.user.id,
-        'room_type': room_type,
-    })
+def room_advanced(request, chat_room_id=-1):
+    if chat_room_id == -1:
+        pass
+    else:
+        room = ChatRoom.objects.get(id=chat_room_id)
+        room_type = ''
+        if room is not None:
+            if room.type == 1:
+                room_type = 'official_account'
+            elif room.type == 2:
+                room_type = 'group'
+            elif room.type == 3:
+                room_type = 'solo'
+        return render(request, 'chat/components/message/room/room-advanced.html', {
+            'room_name': chat_room_id,
+            'chat_room_id': chat_room_id,
+            'user_id': request.user.id,
+            'room_type': room_type,
+        })
 
 
 def available_chat_channels(request):
@@ -41,9 +44,9 @@ def available_chat_channels(request):
 def chat_to_user(request, user_id):
     if request.user.id != user_id:
         user = User.objects.get(id=user_id)
-        room = ChatRoom.objects.filter(subscribers__in=[user, request.user]).first()
+        room = ChatRoom.objects.filter(subscribers__in=[user, request.user]).filter(type=3).first()
         if room is None:
-            chat_room = ChatRoom(title=user.username, type=3)
+            chat_room = ChatRoom(title=user.username, type=3, open_date_time=datetime.datetime.now())
             chat_room.save()
             chat_room.subscribers.set([user, request.user])
             chat_room.save()

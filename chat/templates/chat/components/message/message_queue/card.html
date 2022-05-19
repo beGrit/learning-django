@@ -6,8 +6,9 @@
                                        alt="Not Found">
             </div>
             <div class="chat_ib">
-                <h5>{{ card_data.chat_room }} <span
-                        class="chat_date">{{ card_data.meta_info.last_send_time }}</span>
+                <h5>
+                    {{ card_data.chat_room }} - {{ card_data.meta_info.type }}
+                    <span class="chat_date">{{ card_data.meta_info.last_send_time }}</span>
                 </h5>
                 <p>{{ card_data.message }}</p>
             </div>

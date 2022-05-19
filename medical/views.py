@@ -32,7 +32,7 @@ def home_page(request):
             'description': '看看有哪些有用的器材',
         },
         {
-            'details_url_path': reverse('medical:hospital-index'),
+            'details_url_path': reverse('medical:hospital-list'),
             'title': '查医院',
             'description': '看看附近有哪些医院？',
         },
@@ -55,6 +55,7 @@ def home_page(request):
                 'facade_image_url_path': news.image_url_path,
                 'title': news.title,
                 'content': news.content,
+                'detail_route_path': news.get_detail_route_path(),
             })
     else:
         popularization_articles = None
@@ -218,8 +219,10 @@ def volunteer_register_form(request: HttpRequest):
         if form.is_valid():
             with transaction.atomic():
                 model: Volunteer = form.save(commit=False)
+                model.related_user = request.user
                 model.support_type = 1
                 model.work_year = 0
+                model.email = model.related_user.email
                 model.save()
                 return HttpResponseRedirect(urls.reverse('medical:activity-vaccination-subscribe-success'))
     else:
@@ -272,6 +275,23 @@ class HospitalListView(ListView):
 class HospitalDetailView(DetailView):
     model = Hospital
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        actions = []
+        # Add vaccination activity.
+        vaccination = Vaccination.objects.filter(related_builder_area__related_hospital_id=self.object.id).first()
+        if vaccination is not None:
+            actions.append(
+                {
+                    'name': '最新疫苗预约',
+                    'action_route': reverse('medical:activity-vaccination-subscribe-form', kwargs={
+                        'vaccination_id': vaccination.id,
+                    }),
+                },
+            )
+        context['actions'] = actions
+        return context
+
 
 class VaccineListView(CommonTableListView):
     model = Vaccine
@@ -285,3 +305,11 @@ class VaccineListView(CommonTableListView):
 
     def get_breadcrumb_name(self):
         return self.model._meta.model_name
+
+
+class NewsDetailsView(DetailView):
+    model = News
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
