@@ -18,22 +18,11 @@ class BaseAdmin(admin.ModelAdmin):
 
     list_per_page = 10
 
-    actions = ['export_selected_objects']
-
     def get_sortable_by(self, request):
         return self.get_list_display(request)
 
     def get_search_fields(self, request):
         return self.get_list_display(request)
-
-    @admin.action(description='Export selected items.')
-    def export_selected_objects(self, request, queryset):
-        selected = queryset.values_list('pk', flat=True)
-        ct = ContentType.objects.get_for_model(queryset.model)
-        return HttpResponseRedirect('/export/?ct=%s&ids=%s' % (
-            ct.pk,
-            ','.join(str(pk) for pk in selected),
-        ))
 
 
 @admin.register(Drug)
@@ -266,7 +255,7 @@ class AutoReplyAdmin(BaseAdmin):
 
 
 models = apps.get_models()
-supported_app = ['admin', 'auth', 'chat', 'medical',]
+supported_app = ['admin', 'auth', 'chat', 'medical', ]
 for model in models:
     if not admin.site.is_registered(model) and model._meta.app_label in supported_app:
         admin.site.register(model)

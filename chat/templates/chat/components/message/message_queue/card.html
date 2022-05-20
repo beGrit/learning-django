@@ -1,9 +1,9 @@
 {% load static html model view empty %}
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-1">
-            <input class="message-checkbox" type="checkbox" value="{{ card_data.chat_room_id }}">
-        </div>
+{#        <div class="col-1">#}
+{#            <input class="message-checkbox" type="checkbox" value="{{ card_data.chat_room_id }}">#}
+{#        </div>#}
         <div class="col-11">
             <a href="{% url 'chat:room-advanced' chat_room_id=card_data.chat_room_id %}">
                 <div class="chat_list {% if action_room_id is not None and active_room_id == card_data.chat_room_id %}active_chat{% endif %}">
